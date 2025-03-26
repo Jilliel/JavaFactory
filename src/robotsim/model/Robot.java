@@ -1,11 +1,21 @@
 package robotsim.model;
-import robotsim.shape.Circle;
+import robotsim.shape.Shape;
 
 public class Robot extends Component{
 	
 	private String name;
 	private double speed;
 	
+	public Robot(double x, double y, Shape shape, String name, double speed) {
+		super(x, y, shape);
+		this.name = name;
+		this.speed = speed;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public double getSpeed() {
 		return speed;
 	}
@@ -16,12 +26,6 @@ public class Robot extends Component{
 
 	public void setSpeed(double speed) {
 		this.speed = speed;
-	}
-
-	public Robot(String name, double x, double y, double radius) {
-		super(x, y, new Circle(radius));
-		this.name = name;
-		this.speed = 0;
 	}
 
 	@Override

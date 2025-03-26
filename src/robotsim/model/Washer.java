@@ -1,12 +1,12 @@
 package robotsim.model;
-import robotsim.shape.Circle;
+import robotsim.shape.Shape;
 
 public class Washer extends Component{
 	
 	private double weight;
-	
-	public Washer(double x, double y, double radius, double weight) {
-		super(x, y, new Circle(radius));
+
+	public Washer(double x, double y, Shape shape, double weight) {
+		super(x, y, shape);
 		this.weight = weight;
 	}
 
