@@ -1,7 +1,9 @@
 package robotsim.model;
-import robotsim.shape.Shape;
+import fr.tp.inf112.projects.canvas.model.Shape;
+import fr.tp.inf112.projects.canvas.model.Style;
+import fr.tp.inf112.projects.canvas.model.Figure;
 
-public class Component {
+public class Component implements Figure {
 	private double x;
 	private double y;
 	private Shape shape;
@@ -35,6 +37,30 @@ public class Component {
 
 	public void setY(double y) {
 		this.y = y;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Name not specified";
+	}
+
+	@Override
+	public int getxCoordinate() {
+		// TODO Auto-generated method stub
+		return (int)this.x;
+	}
+
+	@Override
+	public int getyCoordinate() {
+		// TODO Auto-generated method stub
+		return (int)this.y;
+	}
+
+	@Override
+	public Style getStyle() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
