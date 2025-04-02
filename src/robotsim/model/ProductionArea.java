@@ -20,4 +20,7 @@ public class ProductionArea extends Component {
 		this.materials = materials;
 	}
 	
+	public void addMetrial(Washer washer) {
+		this.materials.add(washer);
+	}
 }

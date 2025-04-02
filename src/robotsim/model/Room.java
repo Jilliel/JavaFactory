@@ -25,7 +25,12 @@ public class Room extends Component{
 	public void setDoors(ArrayList<Door> doors) {
 		this.doors = doors;
 	}
-
+	
+	public void addDoor(Door door) {
+		this.doors.add(door);
+	}
+	
+	
 	public ArrayList<Washer> getWashers() {
 		return washers;
 	}
@@ -33,7 +38,12 @@ public class Room extends Component{
 	public void setWashers(ArrayList<Washer> washers) {
 		this.washers = washers;
 	}
+	
+	public void addWasher(Washer washer) {
+		this.washers.add(washer);
+	}
 
+	
 	public ArrayList<ProductionArea> getAreas() {
 		return areas;
 	}
@@ -41,13 +51,22 @@ public class Room extends Component{
 	public void setAreas(ArrayList<ProductionArea> areas) {
 		this.areas = areas;
 	}
-
+	
+	public void addArea(ProductionArea area) {
+		this.areas.add(area);
+	}
+	
+	
 	public ArrayList<ChargingStation> getStations() {
 		return stations;
 	}
 
 	public void setStations(ArrayList<ChargingStation> stations) {
 		this.stations = stations;
+	}
+	
+	public void addStation(ChargingStation station) {
+		this.stations.add(station);
 	}
 	
 }
