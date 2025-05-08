@@ -68,4 +68,13 @@ public class Room extends Component{
 		this.stations.add(station);
 	}
 	
+	public ArrayList<Component> getComponents() {
+		ArrayList <Component> result = new ArrayList<Component>();
+		result.addAll(this.stations);
+		result.addAll(this.washers);
+		result.addAll(this.doors);
+		result.addAll(this.areas);
+		return result;
+	}
+	
 }
