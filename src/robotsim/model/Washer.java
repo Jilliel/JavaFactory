@@ -5,8 +5,8 @@ public class Washer extends Component{
 	
 	private double weight;
 
-	public Washer(double x, double y, double radius, double weight) {
-		super(x, y, new Oval((int)radius, (int)radius));
+	public Washer(double x, double y, int radius, double weight) {
+		super(x, y, new Oval(radius, radius));
 		this.weight = weight;
 	}
 

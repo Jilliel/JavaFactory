@@ -1,12 +1,11 @@
 package robotsim.model;
-
-import robotsim.shape.Shape;
+import shapes.Rectangle;
 
 public class ChargingStation extends Component{
 	private boolean busy;
 	
-	public ChargingStation(double x, double y, Shape shape, boolean busy) {
-		super(x, y, shape);
+	public ChargingStation(double x, double y, int width, int height, boolean busy) {
+		super(x, y, new Rectangle(width, height));
 		this.busy = busy;
 	}
 
