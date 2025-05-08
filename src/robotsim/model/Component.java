@@ -16,7 +16,11 @@ public class Component implements Figure {
 		this.shape = shape;
 		this.name = name;
 	}
-
+	
+	public void behave() {
+		
+	}
+	
 	public Shape getShape() {
 		return shape;
 	}

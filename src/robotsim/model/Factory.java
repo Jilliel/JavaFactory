@@ -92,4 +92,14 @@ public class Factory extends Component implements Canvas{
 		}
 		return (Collection<Figure>) elements;
 	}
+	
+	@Override
+	public void behave() {
+		for (int i=0; i < this.robots.size(); i++) {
+			this.robots.get(i).behave();
+		}
+		for (int i=0; i < this.rooms.size(); i++) {
+			this.rooms.get(i).behave();
+		}
+	}
 }
