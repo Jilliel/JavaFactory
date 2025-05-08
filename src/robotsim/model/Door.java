@@ -3,13 +3,13 @@ import shapes.Rectangle;
 
 public class Door extends Component {
 	
-	private double width;
+	private int width;
 	private boolean open;
 	private Room room1;
 	private Room room2;
 	
 	
-	public Door(double x, double y, int width, int height, boolean open, Room room1, Room room2) {
+	public Door(int x, int y, int width, int height, boolean open, Room room1, Room room2) {
 		super(x, y, new Rectangle(width, height));
 		this.width = width;
 		this.open = open;
@@ -33,11 +33,11 @@ public class Door extends Component {
 		this.room2 = room2;
 	}
 	
-	public double getWidth() {
+	public int getWidth() {
 		return width;
 	}
 	
-	public void setWidth(double width) {
+	public void setWidth(int width) {
 		this.width = width;
 	}
 	

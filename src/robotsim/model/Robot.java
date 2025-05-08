@@ -13,7 +13,7 @@ public class Robot extends Component{
 	private ArrayList<Washer> washers;
 	private int radius;
 	
-	public Robot(double x, double y, int radius, String name, double speed, double battery, Room room,
+	public Robot(int x, int y, int radius, String name, double speed, double battery, Room room,
 			boolean busy, ArrayList<Washer> washers) {
 		super(x, y, new Oval(radius, radius));
 		this.name = name;

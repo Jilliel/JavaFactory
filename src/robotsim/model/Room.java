@@ -8,7 +8,7 @@ public class Room extends Component{
 	private ArrayList<ProductionArea> areas;
 	private ArrayList<ChargingStation> stations;
 	
-	public Room(double x, double y, int width, int height, ArrayList<Door> doors, ArrayList<Washer> washers,
+	public Room(int x, int y, int width, int height, ArrayList<Door> doors, ArrayList<Washer> washers,
 			ArrayList<ProductionArea> areas, ArrayList<ChargingStation> stations) {
 		super(x, y, new Rectangle(width, height));
 		this.doors = doors;

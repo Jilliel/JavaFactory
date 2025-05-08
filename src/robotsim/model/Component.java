@@ -4,11 +4,11 @@ import fr.tp.inf112.projects.canvas.model.Style;
 import fr.tp.inf112.projects.canvas.model.Figure;
 
 public class Component implements Figure {
-	private double x;
-	private double y;
+	private int x;
+	private int y;
 	private Shape shape;
 	
-	public Component(double x, double y, Shape shape) {
+	public Component(int x, int y, Shape shape) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -23,19 +23,19 @@ public class Component implements Figure {
 		this.shape = shape;
 	}
 
-	public double getX() {
+	public int getX() {
 		return x;
 	}
 
-	public void setX(double x) {
+	public void setX(int x) {
 		this.x = x;
 	}
 
-	public double getY() {
+	public int getY() {
 		return y;
 	}
 
-	public void setY(double y) {
+	public void setY(int y) {
 		this.y = y;
 	}
 
@@ -48,13 +48,13 @@ public class Component implements Figure {
 	@Override
 	public int getxCoordinate() {
 		// TODO Auto-generated method stub
-		return (int)this.x;
+		return this.x;
 	}
 
 	@Override
 	public int getyCoordinate() {
 		// TODO Auto-generated method stub
-		return (int)this.y;
+		return this.y;
 	}
 
 	@Override
