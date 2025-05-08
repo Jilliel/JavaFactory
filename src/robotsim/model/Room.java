@@ -1,7 +1,6 @@
 package robotsim.model;
 import java.util.ArrayList;
-
-import robotsim.shape.Shape;
+import shapes.Rectangle;
 
 public class Room extends Component{
 	private ArrayList<Door> doors;
@@ -9,9 +8,9 @@ public class Room extends Component{
 	private ArrayList<ProductionArea> areas;
 	private ArrayList<ChargingStation> stations;
 	
-	public Room(double x, double y, Shape shape, ArrayList<Door> doors, ArrayList<Washer> washers,
+	public Room(double x, double y, int width, int height, ArrayList<Door> doors, ArrayList<Washer> washers,
 			ArrayList<ProductionArea> areas, ArrayList<ChargingStation> stations) {
-		super(x, y, shape);
+		super(x, y, new Rectangle(width, height));
 		this.doors = doors;
 		this.washers = washers;
 		this.areas = areas;

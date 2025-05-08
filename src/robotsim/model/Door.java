@@ -9,8 +9,8 @@ public class Door extends Component {
 	private Room room2;
 	
 	
-	public Door(double x, double y, Rectangle shape, double width, boolean open, Room room1, Room room2) {
-		super(x, y, shape);
+	public Door(double x, double y, int width, int height, boolean open, Room room1, Room room2) {
+		super(x, y, new Rectangle(width, height));
 		this.width = width;
 		this.open = open;
 		this.room1 = room1;
