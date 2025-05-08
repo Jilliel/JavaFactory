@@ -1,4 +1,5 @@
 package robotsim.model;
+import robotsim.model.Factory;
 import shapes.Oval;
 import java.util.ArrayList;
 
@@ -12,9 +13,9 @@ public class Robot extends Component{
 	private ArrayList<Washer> washers;
 	private int radius;
 	
-	public Robot(int x, int y, int radius, String name, double speed, double battery, Room room,
+	public Robot(int x, int y, int radius, String name, Factory factory, double speed, double battery, Room room,
 			boolean busy, ArrayList<Washer> washers) {
-		super(x, y, new Oval(radius, radius), name);
+		super(x, y, new Oval(radius, radius), name, factory);
 		this.speed = speed;
 		this.radius = radius;
 		this.battery = battery;

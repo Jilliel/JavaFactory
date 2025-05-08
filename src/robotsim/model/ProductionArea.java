@@ -1,4 +1,5 @@
 package robotsim.model;
+import robotsim.model.Factory;
 import java.util.ArrayList;
 import shapes.Rectangle;
 
@@ -7,8 +8,8 @@ public class ProductionArea extends Component {
 	private ArrayList<Washer> materials;
 	private ArrayList<ProductionMachine> machines;
 	
-	public ProductionArea(int x, int y, int width, int height, String name) {
-		super(x, y, new Rectangle(width, height), name);
+	public ProductionArea(int x, int y, int width, int height, String name, Factory factory) {
+		super(x, y, new Rectangle(width, height), name, factory);
 		this.materials = new ArrayList<Washer>();
 		this.machines = new ArrayList<ProductionMachine>();
 	}

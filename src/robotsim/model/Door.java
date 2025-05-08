@@ -1,5 +1,6 @@
 package robotsim.model;
 import shapes.Rectangle;
+import robotsim.model.Factory;
 
 public class Door extends Component {
 	private int width;
@@ -8,8 +9,8 @@ public class Door extends Component {
 	private Room room2;
 	
 	
-	public Door(int x, int y, int width, int height, String name, boolean open, Room room1, Room room2) {
-		super(x, y, new Rectangle(width, height), name);
+	public Door(int x, int y, int width, int height, String name, Factory factory, boolean open, Room room1, Room room2) {
+		super(x, y, new Rectangle(width, height), name, factory);
 		this.width = width;
 		this.open = open;
 		this.room1 = room1;

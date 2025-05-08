@@ -4,20 +4,24 @@ import java.util.Collection;
 import shapes.Rectangle;
 import fr.tp.inf112.projects.canvas.model.Canvas;
 import fr.tp.inf112.projects.canvas.model.Figure;
+import fr.tp.inf112.projects.canvas.controller.Observable;
+import fr.tp.inf112.projects.canvas.controller.Observer;
 
-public class Factory extends Component implements Canvas{
+public class Factory extends Component implements Canvas, Observable{
 	
 	private ArrayList<Robot> robots;
 	private ArrayList<Room> rooms;
 	private int width;
 	private int height;
+	private ArrayList<Observer> observers;
 	
 	public Factory(String name, int x, int y, int width, int height) {
-		super(x, y, new Rectangle(width, height), name);
+		super(x, y, new Rectangle(width, height), name, null);
 		this.robots = new ArrayList<Robot>();
 		this.rooms = new ArrayList<Room>();
 		this.width = width;
 		this.height = height;
+		this.observers = new ArrayList<Observer>();
 	}
 	
 	public void setWidth(int width) {
@@ -103,6 +107,26 @@ public class Factory extends Component implements Canvas{
 		}
 		for (int i=0; i < this.rooms.size(); i++) {
 			this.rooms.get(i).behave();
+		}
+	}
+
+	@Override
+	public boolean addObserver(Observer observer) {
+		if (this.observers.contains(observer)) {
+			return false;
+		}
+		this.observers.add(observer);
+		return true;
+	}
+
+	@Override
+	public boolean removeObserver(Observer observer) {
+		return this.observers.remove(observer);
+	}
+	
+	public void notifyObservers() {
+		for (Observer observer : this.observers) {
+			observer.modelChanged();
 		}
 	}
 }
