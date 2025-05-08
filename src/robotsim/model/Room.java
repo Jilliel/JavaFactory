@@ -4,18 +4,15 @@ import shapes.Rectangle;
 
 public class Room extends Component{
 	private ArrayList<Door> doors;
-	private ArrayList<Washer> washers;
 	private ArrayList<ProductionArea> areas;
 	private ArrayList<ChargingStation> stations;
 	
 
-	public Room(int x, int y, int width, int height, String name, ArrayList<Door> doors, ArrayList<Washer> washers,
-			ArrayList<ProductionArea> areas, ArrayList<ChargingStation> stations) {
+	public Room(int x, int y, int width, int height, String name) {
 		super(x, y, new Rectangle(width, height), name);
-		this.doors = doors;
-		this.washers = washers;
-		this.areas = areas;
-		this.stations = stations;
+		this.doors = new ArrayList<Door>();
+		this.areas = new ArrayList<ProductionArea>();
+		this.stations = new ArrayList<ChargingStation>();
 	}
 	
 	public ArrayList<Door> getDoors() {
@@ -29,19 +26,6 @@ public class Room extends Component{
 	public void addDoor(Door door) {
 		this.doors.add(door);
 	}
-	
-	public ArrayList<Washer> getWashers() {
-		return washers;
-	}
-
-	public void setWashers(ArrayList<Washer> washers) {
-		this.washers = washers;
-	}
-	
-	public void addWasher(Washer washer) {
-		this.washers.add(washer);
-	}
-
 	
 	public ArrayList<ProductionArea> getAreas() {
 		return areas;
@@ -70,11 +54,28 @@ public class Room extends Component{
 	
 	public ArrayList<Component> getComponents() {
 		ArrayList <Component> result = new ArrayList<Component>();
+		/* Add itself */
+		result.add(this);
+		/* Add the stations */
 		result.addAll(this.stations);
-		result.addAll(this.washers);
+		/* Add the doors */
 		result.addAll(this.doors);
-		result.addAll(this.areas);
+		/* Add areas' components figures */
+		for (int i=0; i<this.areas.size(); i++) {
+			result.addAll(this.areas.get(i).getComponents());
+		}
 		return result;
 	}
 	
+	public void behave() {
+		for (int i=0; i < this.doors.size(); i++) {
+			this.doors.get(i).behave();
+		}
+		for (int i=0; i < this.areas.size(); i++) {
+			this.areas.get(i).behave();
+		}
+		for (int i=0; i < this.stations.size(); i++) {
+			this.stations.get(i).behave();
+		}
+	}
 }
