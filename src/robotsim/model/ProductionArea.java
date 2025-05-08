@@ -1,14 +1,13 @@
 package robotsim.model;
 import java.util.ArrayList;
-
-import robotsim.shape.Shape;
+import shapes.Rectangle;
 
 public class ProductionArea extends Component {
 	
 	private ArrayList<Washer> materials;
 
-	public ProductionArea(double x, double y, Shape shape, ArrayList<Washer> materials) {
-		super(x, y, shape);
+	public ProductionArea(double x, double y, int width, int height, ArrayList<Washer> materials) {
+		super(x, y, new Rectangle(width, height));
 		this.materials = materials;
 	}
 
