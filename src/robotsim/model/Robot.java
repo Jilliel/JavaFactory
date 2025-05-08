@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class Robot extends Component{
 	
-	private String name;
 	private double speed;
 	private double battery;
 	private Room room;
@@ -15,22 +14,13 @@ public class Robot extends Component{
 	
 	public Robot(int x, int y, int radius, String name, double speed, double battery, Room room,
 			boolean busy, ArrayList<Washer> washers) {
-		super(x, y, new Oval(radius, radius));
-		this.name = name;
+		super(x, y, new Oval(radius, radius), name);
 		this.speed = speed;
 		this.radius = radius;
 		this.battery = battery;
 		this.room = room;
 		this.busy = busy;
 		this.washers = washers;
-	}
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 	
 	public int getRadius() {
@@ -93,7 +83,7 @@ public class Robot extends Component{
 	
 	@Override
 	public String toString() {
-		return "Nom: " + name + " / Vitesse: " + speed + "km/h.";
+		return "Nom: " + this.getName() + " / Vitesse: " + speed + "km/h.";
 	}
 	
 }

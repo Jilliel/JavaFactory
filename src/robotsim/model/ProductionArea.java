@@ -6,8 +6,8 @@ public class ProductionArea extends Component {
 	
 	private ArrayList<Washer> materials;
 
-	public ProductionArea(int x, int y, int width, int height, ArrayList<Washer> materials) {
-		super(x, y, new Rectangle(width, height));
+	public ProductionArea(int x, int y, int width, int height, String name, ArrayList<Washer> materials) {
+		super(x, y, new Rectangle(width, height), name);
 		this.materials = materials;
 	}
 

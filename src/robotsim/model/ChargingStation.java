@@ -4,8 +4,8 @@ import shapes.Rectangle;
 public class ChargingStation extends Component{
 	private boolean busy;
 	
-	public ChargingStation(int x, int y, int width, int height, boolean busy) {
-		super(x, y, new Rectangle(width, height));
+	public ChargingStation(int x, int y, int width, int height, String name, boolean busy) {
+		super(x, y, new Rectangle(width, height), name);
 		this.busy = busy;
 	}
 

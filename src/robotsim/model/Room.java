@@ -3,31 +3,21 @@ import java.util.ArrayList;
 import shapes.Rectangle;
 
 public class Room extends Component{
-	private String name;
 	private ArrayList<Door> doors;
 	private ArrayList<Washer> washers;
 	private ArrayList<ProductionArea> areas;
 	private ArrayList<ChargingStation> stations;
 	
 
-	public Room(String name, int x, int y, int width, int height, ArrayList<Door> doors, ArrayList<Washer> washers,
+	public Room(int x, int y, int width, int height, String name, ArrayList<Door> doors, ArrayList<Washer> washers,
 			ArrayList<ProductionArea> areas, ArrayList<ChargingStation> stations) {
-		super(x, y, new Rectangle(width, height));
-		this.name = name;
+		super(x, y, new Rectangle(width, height), name);
 		this.doors = doors;
 		this.washers = washers;
 		this.areas = areas;
 		this.stations = stations;
 	}
 	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public ArrayList<Door> getDoors() {
 		return doors;
 	}

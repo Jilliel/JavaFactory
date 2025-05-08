@@ -7,12 +7,14 @@ public class Component implements Figure {
 	private int x;
 	private int y;
 	private Shape shape;
+	private String name;
 	
-	public Component(int x, int y, Shape shape) {
+	public Component(int x, int y, Shape shape, String name) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.shape = shape;
+		this.name = name;
 	}
 
 	public Shape getShape() {
@@ -42,7 +44,11 @@ public class Component implements Figure {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "Name not specified";
+		return this.name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
