@@ -87,6 +87,9 @@ public class Factory extends Component implements Canvas{
 	@Override
 	public Collection<Figure> getFigures() {
 		ArrayList<Figure> elements = new ArrayList<Figure>();
+		for (int i=0; i < this.robots.size(); i++) {
+			elements.add(this.robots.get(i));
+		}
 		for (int i=0; i < this.rooms.size(); i++) {
 			elements.addAll(this.rooms.get(i).getComponents());
 		}
