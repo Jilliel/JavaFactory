@@ -2,7 +2,6 @@ package robotsim.model;
 import shapes.Oval;
 import java.util.ArrayList;
 
-
 public class Robot extends Component{
 	
 	private double speed;
@@ -12,15 +11,14 @@ public class Robot extends Component{
 	private ArrayList<Washer> washers;
 	private int radius;
 	
-	public Robot(int x, int y, int radius, String name, double speed, double battery, Room room,
-			boolean busy, ArrayList<Washer> washers) {
+	public Robot(int x, int y, int radius, String name, double speed, double battery, Room room, boolean busy) {
 		super(x, y, new Oval(radius, radius), name);
 		this.speed = speed;
 		this.radius = radius;
 		this.battery = battery;
 		this.room = room;
 		this.busy = busy;
-		this.washers = washers;
+		this.washers = new ArrayList<Washer>();
 	}
 	
 	public int getRadius() {
@@ -79,11 +77,44 @@ public class Robot extends Component{
 	public Washer popWasher(int index) {
 		return this.washers.remove(index);	
 	}
-
 	
+	public Washer getWasher(int index) {
+		return this.washers.get(index);
+	}
+
 	@Override
 	public String toString() {
-		return "Nom: " + this.getName() + " / Vitesse: " + speed + "km/h.";
+		return "Nom: " + this.getName() + " / Vitesse: " + this.getSpeed() + "km/h.";
 	}
 	
+	public boolean near(Washer other) {
+		boolean xcdt = (other.getX() == this.getX());
+		boolean ycdt = (other.getY() == this.getY());
+		/* Washers and robots are shaped like circles*/
+		return (xcdt && ycdt);
+	}	
+	
+	private Washer getTarget() {
+		if (this.washers.size() == 0) {	return null; }
+		
+		Washer target = this.getWasher(0);
+		if (this.near(target)) {
+			this.popWasher(0);
+			return this.getTarget();
+		} else {
+			return target;
+		}
+	}
+	
+	private void move(Washer target) {
+		
+	}
+	
+	public void behave() {
+		Washer target = this.getTarget();
+		if (target == null) {
+			return;
+		}
+		this.move(target);
+	}
 }
