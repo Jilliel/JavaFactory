@@ -1,5 +1,5 @@
 package robotsim.model;
-import robotsim.shape.Shape;
+import shapes.Rectangle;
 
 public class Door extends Component {
 	
@@ -9,7 +9,7 @@ public class Door extends Component {
 	private Room room2;
 	
 	
-	public Door(double x, double y, Shape shape, double width, boolean open, Room room1, Room room2) {
+	public Door(double x, double y, Rectangle shape, double width, boolean open, Room room1, Room room2) {
 		super(x, y, shape);
 		this.width = width;
 		this.open = open;
