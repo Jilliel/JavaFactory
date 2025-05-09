@@ -57,7 +57,15 @@ public class PersistenceManager extends AbstractCanvasPersistenceManager impleme
 	
 	@Override
 	public boolean delete(Canvas canvasModel) throws IOException {
-		return false;
+		boolean success = false;
+		try {
+			File file = new File(canvasModel.getId());
+			success = file.delete();
+		} 
+		catch (Exception ex) {
+			ex.printStackTrace();
+		} 
+		return success;
 	}
 
 }
