@@ -17,6 +17,7 @@ public class Robot extends Component implements Serializable{
 	private boolean busy;
 	private List<Washer> washers;
 	private int radius;
+	private static final ComponentStyle style = new ComponentStyle(new ComponentColor(0, 255, 0), null);
 	
 	public Robot(int x, int y, int radius, String name, Factory factory, double speed, double battery, Room room,
 			boolean busy) {
@@ -27,7 +28,6 @@ public class Robot extends Component implements Serializable{
 		this.room = room;
 		this.busy = busy;
 		this.washers = new ArrayList<Washer>();
-		this.setStyle(new ComponentStyle(new ComponentColor(0, 255, 0), null));
 	}
 	
 	public int getRadius() {
@@ -94,6 +94,11 @@ public class Robot extends Component implements Serializable{
 	@Override
 	public String toString() {
 		return "Nom: " + this.getName() + " / Vitesse: " + this.getSpeed() + "km/h.";
+	}
+	
+	@Override
+	public Style getStyle() {
+		return Robot.style;
 	}
 	
 	public boolean near(Washer other) {

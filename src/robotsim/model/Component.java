@@ -10,7 +10,7 @@ public class Component implements Figure {
 	private int y;
 	private Shape shape;
 	private String name;
-	private ComponentStyle style = null;
+	private static ComponentStyle style = null;
 	private Factory factory;
 	
 	public Component(int x, int y, Shape shape, String name, Factory factory) {
@@ -35,7 +35,7 @@ public class Component implements Figure {
 	}
 	
 	public void setStyle(ComponentStyle style) {
-		this.style = style;
+		Component.style = style;
 	}
 
 	public int getX() {

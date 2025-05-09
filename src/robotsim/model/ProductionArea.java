@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.tp.inf112.projects.canvas.model.Style;
 import shapes.ComponentStroke;
 import shapes.ComponentStyle;
 import shapes.Rectangle;
@@ -12,12 +13,12 @@ public class ProductionArea extends Component implements Serializable{
 	private static final long serialVersionUID = 202505090920L;
 	private List<Washer> materials;
 	private List<ProductionMachine> machines;
+	private static final ComponentStyle style = new ComponentStyle(null, new ComponentStroke(null, 1, new float[] {5,5} ));
 	
 	public ProductionArea(int x, int y, int width, int height, String name, Factory factory) {
 		super(x, y, new Rectangle(width, height), name, factory);
 		this.materials = new ArrayList<Washer>();
 		this.machines = new ArrayList<ProductionMachine>();
-		this.setStyle(new ComponentStyle(null, new ComponentStroke(null, 1, new float[] {5,5} )));
 	}
 
 	public List<Washer> getMaterials() {
@@ -63,5 +64,10 @@ public class ProductionArea extends Component implements Serializable{
 		for (int i=0; i < this.machines.size(); i++) {
 			this.machines.get(i).behave();
 		}
+	}
+	
+	@Override
+	public Style getStyle() {
+		return ProductionArea.style;
 	}
 }
