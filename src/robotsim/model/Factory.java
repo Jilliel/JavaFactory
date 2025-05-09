@@ -14,6 +14,7 @@ public class Factory extends Component implements Canvas, Observable{
 	private int width;
 	private int height;
 	private ArrayList<Observer> observers;
+	private boolean simulationRunning;
 	
 	public Factory(String name, int x, int y, int width, int height) {
 		super(x, y, new Rectangle(width, height), name, null);
@@ -22,6 +23,7 @@ public class Factory extends Component implements Canvas, Observable{
 		this.width = width;
 		this.height = height;
 		this.observers = new ArrayList<Observer>();
+		this.simulationRunning = false;
 	}
 	
 	public void setWidth(int width) {
@@ -128,5 +130,27 @@ public class Factory extends Component implements Canvas, Observable{
 		for (Observer observer : this.observers) {
 			observer.modelChanged();
 		}
+	}
+	
+	public void startSimulation() {
+		this.simulationRunning = true;
+		while (isSimulationRunning()) {
+			behave();
+			
+			try {
+				Thread.sleep(200);
+			}
+			catch (InterruptedException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	public void stopSimulation() {
+		this.simulationRunning = false;
+	}
+	
+	public boolean isSimulationRunning() {
+		return this.simulationRunning;
 	}
 }
