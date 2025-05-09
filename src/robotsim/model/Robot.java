@@ -1,15 +1,18 @@
 package robotsim.model;
 import robotsim.model.Factory;
 import shapes.Oval;
+import java.util.List;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Robot extends Component{
+public class Robot extends Component implements Serializable{
 	
+	private static final long serialVersionUID = 202505090930L;
 	private double speed;
 	private double battery;
 	private Room room;
 	private boolean busy;
-	private ArrayList<Washer> washers;
+	private List<Washer> washers;
 	private int radius;
 	
 	public Robot(int x, int y, int radius, String name, Factory factory, double speed, double battery, Room room,
@@ -64,11 +67,11 @@ public class Robot extends Component{
 		this.busy = busy;
 	}
 
-	public ArrayList<Washer> getWashers() {
+	public List<Washer> getWashers() {
 		return washers;
 	}
 
-	public void setWashers(ArrayList<Washer> washers) {
+	public void setWashers(List<Washer> washers) {
 		this.washers = washers;
 	}
 	

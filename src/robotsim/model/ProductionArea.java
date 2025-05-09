@@ -1,12 +1,16 @@
 package robotsim.model;
 import robotsim.model.Factory;
-import java.util.ArrayList;
 import shapes.Rectangle;
 
-public class ProductionArea extends Component {
+import java.util.List;
+import java.util.ArrayList;
+import java.io.Serializable;
+
+public class ProductionArea extends Component implements Serializable{
 	
-	private ArrayList<Washer> materials;
-	private ArrayList<ProductionMachine> machines;
+	private static final long serialVersionUID = 202505090920L;
+	private List<Washer> materials;
+	private List<ProductionMachine> machines;
 	
 	public ProductionArea(int x, int y, int width, int height, String name, Factory factory) {
 		super(x, y, new Rectangle(width, height), name, factory);
@@ -14,11 +18,11 @@ public class ProductionArea extends Component {
 		this.machines = new ArrayList<ProductionMachine>();
 	}
 
-	public ArrayList<Washer> getMaterials() {
+	public List<Washer> getMaterials() {
 		return materials;
 	}
 
-	public void setMaterials(ArrayList<Washer> materials) {
+	public void setMaterials(List<Washer> materials) {
 		this.materials = materials;
 	}
 	
@@ -26,11 +30,11 @@ public class ProductionArea extends Component {
 		this.materials.add(washer);
 	}
 	
-	public ArrayList<ProductionMachine> getMachines() {
+	public List<ProductionMachine> getMachines() {
 		return machines;
 	}
 
-	public void setMachines(ArrayList<ProductionMachine> machines) {
+	public void setMachines(List<ProductionMachine> machines) {
 		this.machines = machines;
 	}
 	
@@ -38,7 +42,7 @@ public class ProductionArea extends Component {
 		this.machines.add(machine);
 	}
 	
-	public ArrayList<Component> getComponents() {
+	public List<Component> getComponents() {
 		ArrayList <Component> result = new ArrayList<Component>();
 		/* Add itself */
 		result.add(this);

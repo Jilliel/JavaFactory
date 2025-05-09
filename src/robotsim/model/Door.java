@@ -1,8 +1,11 @@
 package robotsim.model;
 import shapes.Rectangle;
 import robotsim.model.Factory;
+import java.io.Serializable;
 
-public class Door extends Component {
+public class Door extends Component implements Serializable{
+	
+	private static final long serialVersionUID = 202505090921L;
 	private int width;
 	private boolean open;
 	private Room room1;

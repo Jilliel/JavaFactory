@@ -1,20 +1,30 @@
 package robotsim.model;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import shapes.Rectangle;
 import fr.tp.inf112.projects.canvas.model.Canvas;
 import fr.tp.inf112.projects.canvas.model.Figure;
+
 import fr.tp.inf112.projects.canvas.controller.Observable;
 import fr.tp.inf112.projects.canvas.controller.Observer;
 
-public class Factory extends Component implements Canvas, Observable{
+import java.io.Serializable;
+
+public class Factory extends Component implements Canvas, Serializable, Observable {
 	
-	private ArrayList<Robot> robots;
-	private ArrayList<Room> rooms;
+	private static final long serialVersionUID = 202505090919L;
+	
 	private int width;
 	private int height;
-	private ArrayList<Observer> observers;
+	private List<Room> rooms;
+	private List<Robot> robots;
+	
+	private List<Observer> observers;
 	private boolean simulationRunning;
+
+	private String id;
+
 	
 	public Factory(String name, int x, int y, int width, int height) {
 		super(x, y, new Rectangle(width, height), name, null);
@@ -46,12 +56,12 @@ public class Factory extends Component implements Canvas, Observable{
 	
 	@Override
 	public void setId(String id) {
-		this.setName(id);
+		this.id = id;
 	}
 	
 	@Override 
 	public String getId() {
-		return this.getName();
+		return this.id;
 	}
 	
 	private boolean checkRobotName(String name) {

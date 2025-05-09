@@ -1,9 +1,11 @@
 package robotsim.model;
 import shapes.Oval;
 import robotsim.model.Factory;
+import java.io.Serializable;
 
-public class Washer extends Component{
+public class Washer extends Component implements Serializable{
 	
+	private static final long serialVersionUID = 202505090923L;
 	private double weight;
 	private int radius;
 	

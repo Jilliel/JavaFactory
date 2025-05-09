@@ -1,12 +1,16 @@
 package robotsim.model;
+import java.util.List;
 import java.util.ArrayList;
 import shapes.Rectangle;
 import robotsim.model.Factory;
+import java.io.Serializable;
 
-public class Room extends Component{
-	private ArrayList<Door> doors;
-	private ArrayList<ProductionArea> areas;
-	private ArrayList<ChargingStation> stations;
+public class Room extends Component implements Serializable{
+	
+	private static final long serialVersionUID = 202505090931L;
+	private List<Door> doors;
+	private List<ProductionArea> areas;
+	private List<ChargingStation> stations;
 	
 
 	public Room(int x, int y, int width, int height, String name, Factory factory) {
@@ -16,11 +20,11 @@ public class Room extends Component{
 		this.stations = new ArrayList<ChargingStation>();
 	}
 	
-	public ArrayList<Door> getDoors() {
+	public List<Door> getDoors() {
 		return doors;
 	}
 
-	public void setDoors(ArrayList<Door> doors) {
+	public void setDoors(List<Door> doors) {
 		this.doors = doors;
 	}
 	
@@ -28,11 +32,11 @@ public class Room extends Component{
 		this.doors.add(door);
 	}
 	
-	public ArrayList<ProductionArea> getAreas() {
+	public List<ProductionArea> getAreas() {
 		return areas;
 	}
 
-	public void setAreas(ArrayList<ProductionArea> areas) {
+	public void setAreas(List<ProductionArea> areas) {
 		this.areas = areas;
 	}
 	
@@ -41,11 +45,11 @@ public class Room extends Component{
 	}
 	
 	
-	public ArrayList<ChargingStation> getStations() {
+	public List<ChargingStation> getStations() {
 		return stations;
 	}
 
-	public void setStations(ArrayList<ChargingStation> stations) {
+	public void setStations(List<ChargingStation> stations) {
 		this.stations = stations;
 	}
 	
@@ -53,7 +57,7 @@ public class Room extends Component{
 		this.stations.add(station);
 	}
 	
-	public ArrayList<Component> getComponents() {
+	public List<Component> getComponents() {
 		ArrayList <Component> result = new ArrayList<Component>();
 		/* Add itself */
 		result.add(this);
