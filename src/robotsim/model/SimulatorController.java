@@ -46,7 +46,7 @@ public class SimulatorController implements CanvasViewerController  {
 	@Override
 	public CanvasPersistenceManager getPersistenceManager() {
 		// TODO Auto-generated method stub
-		return null;
+		return new PersistenceManager();
 	}
 
 	@Override
