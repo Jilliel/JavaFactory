@@ -10,14 +10,13 @@ import java.io.ObjectOutputStream;
 import java.io.IOException;
 
 import fr.tp.inf112.projects.canvas.model.Canvas;
-import fr.tp.inf112.projects.canvas.model.CanvasPersistenceManager;
 import fr.tp.inf112.projects.canvas.model.impl.AbstractCanvasPersistenceManager;
 import fr.tp.inf112.projects.canvas.view.FileCanvasChooser;
 
-public class PersistenceManager extends AbstractCanvasPersistenceManager implements CanvasPersistenceManager {
+public class PersistenceManager extends AbstractCanvasPersistenceManager{
 	
 	public PersistenceManager() {
-		super(new FileCanvasChooser("TEST", ""));
+		super(new FileCanvasChooser("factory", ""));
 	}
 	
 	@Override
@@ -31,11 +30,9 @@ public class PersistenceManager extends AbstractCanvasPersistenceManager impleme
 		}
 		catch (IOException ex){
 			ex.printStackTrace(); 
-			result = null;
 		}
 		catch (ClassNotFoundException ex){
 			ex.printStackTrace();
-			result = null;
 		}
 		return result;
 		

@@ -1,17 +1,23 @@
 package robotsim.model;
-import robotsim.model.Factory;
+import java.io.Serializable;
 import shapes.ComponentStyle;
+import robotsim.model.Factory;
 import fr.tp.inf112.projects.canvas.model.Shape;
 import fr.tp.inf112.projects.canvas.model.Style;
 import fr.tp.inf112.projects.canvas.model.Figure;
 
-public class Component implements Figure {
+public class Component implements Figure, Serializable{
+
+	private static final long serialVersionUID = 202505091314L;
+	
 	private int x;
 	private int y;
 	private Shape shape;
 	private String name;
-	private static ComponentStyle style = null;
 	private Factory factory;
+	
+	private static ComponentStyle style = null;
+	
 	
 	public Component(int x, int y, Shape shape, String name, Factory factory) {
 		super();

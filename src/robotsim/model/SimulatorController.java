@@ -40,7 +40,6 @@ public class SimulatorController implements CanvasViewerController  {
 		else {
 			throw new IllegalArgumentException("canvasModel is not an instance of Factory");
 		}
-		
 	}
 
 	@Override
