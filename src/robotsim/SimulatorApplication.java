@@ -8,10 +8,18 @@ import robotsim.model.ProductionMachine;
 import robotsim.model.Robot;
 import robotsim.model.Room;
 import robotsim.model.SimulatorController;
+import java.util.logging.*;
+import java.util.Arrays;
 
 public class SimulatorApplication {
 	
+	private static final Logger LOGGER = Logger.getLogger(SimulatorApplication.class.getName());
+	
 	public static void main(String[] args) {
+		
+		LOGGER.info("Starting the robot simulator...");
+		LOGGER.config("With parameters " + Arrays.toString(args) + ".");
+		
 		final Factory factory = new Factory("Factory", 0, 0, 500, 500);
 		
 		final Room room1 = new Room(25, 50, 150, 150, "Production Room 1", factory);
