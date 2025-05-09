@@ -20,7 +20,7 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 	private List<Room> rooms;
 	private List<Robot> robots;
 	
-	private List<Observer> observers;
+	private transient List<Observer> observers;
 	private boolean simulationRunning;
 
 	private String id;
@@ -34,6 +34,7 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		this.height = height;
 		this.observers = new ArrayList<Observer>();
 		this.simulationRunning = false;
+		
 	}
 	
 	public void setWidth(int width) {
@@ -124,6 +125,9 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 
 	@Override
 	public boolean addObserver(Observer observer) {
+		if (this.observers == null) {
+			this.observers = new ArrayList<Observer>(); 
+		}
 		if (this.observers.contains(observer)) {
 			return false;
 		}
@@ -133,10 +137,16 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 
 	@Override
 	public boolean removeObserver(Observer observer) {
+		if (this.observers == null) {
+			this.observers = new ArrayList<Observer>(); 
+		}
 		return this.observers.remove(observer);
 	}
 	
 	public void notifyObservers() {
+		if (this.observers == null) {
+			this.observers = new ArrayList<Observer>(); 
+		}
 		for (Observer observer : this.observers) {
 			observer.modelChanged();
 		}
