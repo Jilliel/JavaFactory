@@ -16,7 +16,7 @@ public class Door extends Component implements Serializable{
 	private Room room1;
 	private Room room2;
 	private int height;
-	private static final ComponentStyle openedState = new ComponentStyle(new ComponentColor(255, 255, 255), new ComponentStroke(null, 3, null));
+	private static final ComponentStyle openedState = new ComponentStyle(null, new ComponentStroke(null, 3, null));
 	private static final ComponentStyle closedState = new ComponentStyle(new ComponentColor(0, 0, 0), new ComponentStroke(null, 3, null));
 	
 	

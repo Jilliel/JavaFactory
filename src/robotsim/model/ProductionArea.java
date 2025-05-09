@@ -25,7 +25,31 @@ public class ProductionArea extends Component implements Serializable{
 		this.materials = new ArrayList<Washer>();
 		this.machines = new ArrayList<ProductionMachine>();
 	}
-
+	
+	public void behave() {
+		for (Washer washer : this.materials) {
+			washer.behave();
+		}
+		for (ProductionMachine machine : this.machines) {
+			machine.behave();
+			if (machine.getTimeLeft() == 0) {
+				// TODO Check if a washer can be produced (otherwise it's just a pile of washers?)
+				if (this.getFactory().canProduce(machine)) {
+					// System.out.println("Producing washer");
+					machine.setTimeLeft(ProductionMachine.getTimeToProduce());
+					this.materials.add(new Washer(machine.getX() + (machine.getWidth()/2) - ProductionMachine.getWasherRadius(),
+							machine.getY() + (machine.getHeight()/2)- ProductionMachine.getWasherRadius(),
+							ProductionMachine.getWasherRadius(),ProductionMachine.getWasherWeight(), "Washer", this.getFactory()));
+					this.getFactory().notifyObservers();
+				}
+			}
+			else {
+				machine.setTimeLeft(machine.getTimeLeft()-1);
+			}
+		}
+		this.getFactory().notifyObservers();
+	}
+	
 	public List<Washer> getMaterials() {
 		return materials;
 	}
@@ -60,15 +84,6 @@ public class ProductionArea extends Component implements Serializable{
 		result.addAll(this.machines);
 		
 		return result;
-	}
-	
-	public void behave() {
-		for (int i=0; i < this.materials.size(); i++) {
-			this.materials.get(i).behave();
-		}
-		for (int i=0; i < this.machines.size(); i++) {
-			this.machines.get(i).behave();
-		}
 	}
 	
 	@Override

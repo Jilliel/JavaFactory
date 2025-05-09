@@ -1,4 +1,7 @@
 package robotsim.model;
+import shapes.ComponentColor;
+import shapes.ComponentStroke;
+import shapes.ComponentStyle;
 import shapes.Rectangle;
 import robotsim.model.Factory;
 import java.io.Serializable;
@@ -11,11 +14,16 @@ public class ProductionMachine extends Component implements Serializable{
 	private static final long serialVersionUID = 202505090922L;
 	private int width;
 	private int height;
+	private static final int washerRadius = 5;
+	private static final float washerWeight = 1;
+	private static final int timeToProduce = 25;
+	private int timeLeft;
 	
 	public ProductionMachine(int x, int y, int width, int height, String name, Factory factory) {
 		super(x, y, name, factory);
 		this.width = width;
 		this.height = height;
+		this.timeLeft = ProductionMachine.timeToProduce;
 	}
 
 	@Override
@@ -27,7 +35,48 @@ public class ProductionMachine extends Component implements Serializable{
 	@Override
 	public Style getStyle() {
 		// TODO Auto-generated method stub
-		return null;
+		int number = (int) (255 * ((float) this.timeLeft/(float) ProductionMachine.timeToProduce));
+		return new ComponentStyle(null, new ComponentStroke(new ComponentColor(0, 255-number, 255-number), 5, null));
 	}
+
+	public int getTimeLeft() {
+		return timeLeft;
+	}
+
+	public void setTimeLeft(int timeLeft) {
+		this.timeLeft = timeLeft;
+		this.getFactory().notifyObservers();
+	}
+
+	public static int getWasherRadius() {
+		return washerRadius;
+	}
+
+	public static int getTimeToProduce() {
+		return timeToProduce;
+	}
+
+	public static float getWasherWeight() {
+		return washerWeight;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	
+	
+	
 	
 }

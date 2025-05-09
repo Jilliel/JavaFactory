@@ -26,6 +26,10 @@ public abstract class Component implements Figure, Serializable{
 		
 	}
 	
+	public Factory getFactory() {
+		return this.factory;
+	}
+	
 	public abstract Shape getShape();
 	@Override
 	public abstract Style getStyle();

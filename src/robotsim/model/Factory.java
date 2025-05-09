@@ -38,6 +38,21 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		
 	}
 	
+	public boolean canProduce(ProductionMachine machine) {
+		int targetX = machine.getX() + (machine.getWidth()/2) - ProductionMachine.getWasherRadius();
+		int targetY = machine.getY() + (machine.getHeight()/2)- ProductionMachine.getWasherRadius();
+		for (Room room : this.rooms) {
+			for (ProductionArea area : room.getAreas()) {
+				for (Washer washer : area.getMaterials()) {
+					if (washer.getX() == targetX && washer.getY()==targetY) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
 	public void setWidth(int width) {
 		this.width = width;
 	}
