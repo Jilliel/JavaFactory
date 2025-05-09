@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.tp.inf112.projects.canvas.model.Shape;
 import fr.tp.inf112.projects.canvas.model.Style;
 import shapes.ComponentColor;
 import shapes.ComponentStyle;
@@ -21,7 +22,7 @@ public class Robot extends Component implements Serializable{
 	
 	public Robot(int x, int y, int radius, String name, Factory factory, double speed, double battery, Room room,
 			boolean busy) {
-		super(x, y, new Oval(radius, radius), name, factory);
+		super(x, y, name, factory);
 		this.speed = speed;
 		this.radius = radius;
 		this.battery = battery;
@@ -36,7 +37,6 @@ public class Robot extends Component implements Serializable{
 	
 	public void setRadius(int radius) {
 		this.radius = radius;
-		this.setShape(new Oval(radius, radius));
 	}
 	
 	public double getSpeed() {
@@ -130,5 +130,11 @@ public class Robot extends Component implements Serializable{
 			return;
 		}
 		this.move(target);
+	}
+
+	@Override
+	public Shape getShape() {
+		// TODO Auto-generated method stub
+		return new Oval(radius, radius);
 	}
 }

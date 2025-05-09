@@ -5,7 +5,8 @@ import java.util.Collection;
 import shapes.Rectangle;
 import fr.tp.inf112.projects.canvas.model.Canvas;
 import fr.tp.inf112.projects.canvas.model.Figure;
-
+import fr.tp.inf112.projects.canvas.model.Shape;
+import fr.tp.inf112.projects.canvas.model.Style;
 import fr.tp.inf112.projects.canvas.controller.Observable;
 import fr.tp.inf112.projects.canvas.controller.Observer;
 
@@ -27,7 +28,7 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 
 	
 	public Factory(String name, int x, int y, int width, int height) {
-		super(x, y, new Rectangle(width, height), name, null);
+		super(x, y, name, null);
 		this.robots = new ArrayList<Robot>();
 		this.rooms = new ArrayList<Room>();
 		this.width = width;
@@ -172,5 +173,17 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 	
 	public boolean isSimulationRunning() {
 		return this.simulationRunning;
+	}
+
+	@Override
+	public Style getStyle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Shape getShape() {
+		// TODO Auto-generated method stub
+		return new Rectangle(this.width, this.height);
 	}
 }

@@ -1,6 +1,7 @@
 package robotsim.model;
 import java.io.Serializable;
 
+import fr.tp.inf112.projects.canvas.model.Shape;
 import fr.tp.inf112.projects.canvas.model.Style;
 import shapes.ComponentColor;
 import shapes.ComponentStroke;
@@ -14,13 +15,15 @@ public class Door extends Component implements Serializable{
 	private boolean open;
 	private Room room1;
 	private Room room2;
+	private int height;
 	private static final ComponentStyle openedState = new ComponentStyle(new ComponentColor(255, 255, 255), new ComponentStroke(null, 3, null));
 	private static final ComponentStyle closedState = new ComponentStyle(new ComponentColor(0, 0, 0), new ComponentStroke(null, 3, null));
 	
 	
 	public Door(int x, int y, int width, int height, String name, Factory factory, boolean open, Room room1, Room room2) {
-		super(x, y, new Rectangle(width, height), name, factory);
+		super(x, y, name, factory);
 		this.width = width;
+		this.height = height;
 		this.open = open;
 		this.room1 = room1;
 		this.room2 = room2;
@@ -66,5 +69,11 @@ public class Door extends Component implements Serializable{
 		else {
 			return Door.closedState;
 		}
+	}
+
+	@Override
+	public Shape getShape() {
+		// TODO Auto-generated method stub
+		return new Rectangle(this.width, this.height);
 	}
 }

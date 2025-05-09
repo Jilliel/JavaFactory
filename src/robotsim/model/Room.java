@@ -1,8 +1,11 @@
 package robotsim.model;
 import java.util.List;
+
+import fr.tp.inf112.projects.canvas.model.Shape;
+import fr.tp.inf112.projects.canvas.model.Style;
+
 import java.util.ArrayList;
 import shapes.Rectangle;
-import robotsim.model.Factory;
 import java.io.Serializable;
 
 public class Room extends Component implements Serializable{
@@ -11,10 +14,14 @@ public class Room extends Component implements Serializable{
 	private List<Door> doors;
 	private List<ProductionArea> areas;
 	private List<ChargingStation> stations;
+	private int width;
+	private int height;
 	
 
 	public Room(int x, int y, int width, int height, String name, Factory factory) {
-		super(x, y, new Rectangle(width, height), name, factory);
+		super(x, y, name, factory);
+		this.width = width;
+		this.height = height;
 		this.doors = new ArrayList<Door>();
 		this.areas = new ArrayList<ProductionArea>();
 		this.stations = new ArrayList<ChargingStation>();
@@ -82,5 +89,17 @@ public class Room extends Component implements Serializable{
 		for (int i=0; i < this.stations.size(); i++) {
 			this.stations.get(i).behave();
 		}
+	}
+
+	@Override
+	public Shape getShape() {
+		// TODO Auto-generated method stub
+		return new Rectangle(this.width, this.height);
+	}
+
+	@Override
+	public Style getStyle() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -1,29 +1,23 @@
 package robotsim.model;
 import java.io.Serializable;
-import shapes.ComponentStyle;
-import robotsim.model.Factory;
 import fr.tp.inf112.projects.canvas.model.Shape;
 import fr.tp.inf112.projects.canvas.model.Style;
 import fr.tp.inf112.projects.canvas.model.Figure;
 
-public class Component implements Figure, Serializable{
+public abstract class Component implements Figure, Serializable{
 
 	private static final long serialVersionUID = 202505091314L;
 	
 	private int x;
 	private int y;
-	private Shape shape;
 	private String name;
 	private Factory factory;
 	
-	private static ComponentStyle style = null;
 	
-	
-	public Component(int x, int y, Shape shape, String name, Factory factory) {
+	public Component(int x, int y, String name, Factory factory) {
 		super();
 		this.x = x;
 		this.y = y;
-		this.shape = shape;
 		this.name = name;
 		this.factory = factory;
 	}
@@ -32,17 +26,10 @@ public class Component implements Figure, Serializable{
 		
 	}
 	
-	public Shape getShape() {
-		return shape;
-	}
-
-	public void setShape(Shape shape) {
-		this.shape = shape;
-	}
+	public abstract Shape getShape();
+	@Override
+	public abstract Style getStyle();
 	
-	public void setStyle(ComponentStyle style) {
-		Component.style = style;
-	}
 
 	public int getX() {
 		return x;
@@ -80,12 +67,5 @@ public class Component implements Figure, Serializable{
 	public int getyCoordinate() {
 		// TODO Auto-generated method stub
 		return this.y;
-	}
-
-	@Override
-	public Style getStyle() {
-		// TODO Auto-generated method stub
-		return this.style;
-	}
-	
+	}	
 }
