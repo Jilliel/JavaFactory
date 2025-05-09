@@ -1,7 +1,9 @@
 package robotsim.model;
-import shapes.Oval;
-import robotsim.model.Factory;
 import java.io.Serializable;
+
+import shapes.ComponentColor;
+import shapes.ComponentStyle;
+import shapes.Oval;
 
 public class Washer extends Component implements Serializable{
 	
@@ -13,6 +15,7 @@ public class Washer extends Component implements Serializable{
 		super(x, y, new Oval(radius, radius), name, factory);
 		this.weight = weight;
 		this.radius = radius;
+		this.setStyle(new ComponentStyle(new ComponentColor(0, 0, 255), null));
 	}
 	
 	public int getRadius() {

@@ -1,9 +1,12 @@
 package robotsim.model;
-import robotsim.model.Factory;
-import shapes.Oval;
-import java.util.List;
-import java.util.ArrayList;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.tp.inf112.projects.canvas.model.Style;
+import shapes.ComponentColor;
+import shapes.ComponentStyle;
+import shapes.Oval;
 
 public class Robot extends Component implements Serializable{
 	
@@ -24,6 +27,7 @@ public class Robot extends Component implements Serializable{
 		this.room = room;
 		this.busy = busy;
 		this.washers = new ArrayList<Washer>();
+		this.setStyle(new ComponentStyle(new ComponentColor(0, 255, 0), null));
 	}
 	
 	public int getRadius() {

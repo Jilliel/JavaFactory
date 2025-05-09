@@ -1,5 +1,6 @@
 package robotsim.model;
 import robotsim.model.Factory;
+import shapes.ComponentStyle;
 import fr.tp.inf112.projects.canvas.model.Shape;
 import fr.tp.inf112.projects.canvas.model.Style;
 import fr.tp.inf112.projects.canvas.model.Figure;
@@ -9,6 +10,7 @@ public class Component implements Figure {
 	private int y;
 	private Shape shape;
 	private String name;
+	private ComponentStyle style = null;
 	private Factory factory;
 	
 	public Component(int x, int y, Shape shape, String name, Factory factory) {
@@ -30,6 +32,10 @@ public class Component implements Figure {
 
 	public void setShape(Shape shape) {
 		this.shape = shape;
+	}
+	
+	public void setStyle(ComponentStyle style) {
+		this.style = style;
 	}
 
 	public int getX() {
@@ -73,7 +79,7 @@ public class Component implements Figure {
 	@Override
 	public Style getStyle() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.style;
 	}
 	
 }

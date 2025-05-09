@@ -1,7 +1,11 @@
 package robotsim.model;
-import shapes.Rectangle;
-import robotsim.model.Factory;
 import java.io.Serializable;
+
+import fr.tp.inf112.projects.canvas.model.Style;
+import shapes.ComponentColor;
+import shapes.ComponentStroke;
+import shapes.ComponentStyle;
+import shapes.Rectangle;
 
 public class Door extends Component implements Serializable{
 	
@@ -10,6 +14,8 @@ public class Door extends Component implements Serializable{
 	private boolean open;
 	private Room room1;
 	private Room room2;
+	private ComponentStyle openedState = new ComponentStyle(new ComponentColor(255, 255, 255), new ComponentStroke(null, 3, null));
+	private ComponentStyle closedState = new ComponentStyle(new ComponentColor(0, 0, 0), new ComponentStroke(null, 3, null));
 	
 	
 	public Door(int x, int y, int width, int height, String name, Factory factory, boolean open, Room room1, Room room2) {
@@ -52,4 +58,13 @@ public class Door extends Component implements Serializable{
 		this.open = open;
 	}
 	
+	@Override
+	public Style getStyle() {
+		if (this.isOpen()){
+			return this.openedState;
+		}
+		else {
+			return this.closedState;
+		}
+	}
 }

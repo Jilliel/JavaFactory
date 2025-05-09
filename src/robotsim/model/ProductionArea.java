@@ -1,10 +1,11 @@
 package robotsim.model;
-import robotsim.model.Factory;
-import shapes.Rectangle;
-
-import java.util.List;
-import java.util.ArrayList;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import shapes.ComponentStroke;
+import shapes.ComponentStyle;
+import shapes.Rectangle;
 
 public class ProductionArea extends Component implements Serializable{
 	
@@ -16,6 +17,7 @@ public class ProductionArea extends Component implements Serializable{
 		super(x, y, new Rectangle(width, height), name, factory);
 		this.materials = new ArrayList<Washer>();
 		this.machines = new ArrayList<ProductionMachine>();
+		this.setStyle(new ComponentStyle(null, new ComponentStroke(null, 1, new float[] {5,5} )));
 	}
 
 	public List<Washer> getMaterials() {
