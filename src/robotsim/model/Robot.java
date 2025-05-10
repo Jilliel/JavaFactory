@@ -18,6 +18,8 @@ public class Robot extends Component implements Serializable{
 	private int radius;
 	private List<Position> targets;
 	private List<Position> path;
+	private Position current;
+	private boolean awaitingPath;
 	private FactoryPathFinder pathFinder;
 	
 	private static final ComponentStyle style = new ComponentStyle(new ComponentColor(0, 255, 0), null);
@@ -27,9 +29,11 @@ public class Robot extends Component implements Serializable{
 		this.speed = speed;
 		this.radius = radius;
 		this.room = room;
-		this.pathFinder = pathFinder;
 		this.targets = new ArrayList<Position>();
+		this.current = null;
 		this.path = new ArrayList<Position>();
+		this.pathFinder = pathFinder;
+		this.awaitingPath = false;
 	}
 	
 	public double getSpeed() {
@@ -62,12 +66,21 @@ public class Robot extends Component implements Serializable{
 		this.targets.add(target);
 	}
 	
-	private Position getTarget() {
-		return this.targets.remove(0);	
+	private void renewTarget() {
+		if (this.targets.size() > 0) {
+			this.current = this.targets.remove(0);	
+			this.awaitingPath = true;
+		} else {
+			this.current = null;
+		}
 	}
 	
-	private void setPath(List<Position> path) {
-		this.path = path;
+	private void renewPath() {
+		List<Position> newpath = this.pathFinder.findPath(this.getPosition(), this.current);
+		if (newpath != null) {
+			this.path = newpath;
+			this.awaitingPath = false;
+		}
 	}
 	
 	private Position getNextOnPath() {
@@ -75,17 +88,23 @@ public class Robot extends Component implements Serializable{
 	}
 	
 	private void move() {
-		Position next = this.getNextOnPath();
-		//TODO: Make the robot move here
+		this.setPosition(this.getNextOnPath());
 	}
 	
 	public void behave() {
-		if (this.path.size() == 0) {
-			List<Position> path = this.pathFinder.findPath(this.getPosition(), this.getTarget());
-			// Handle edge-cases here.
-			this.setPath(path);
+		if (this.current == null) {
+			this.renewTarget();
+			return;
 		}
-		this.move();
+		
+		if (this.path.size() == 0) {
+			if (!(this.awaitingPath))  {
+				this.renewTarget();
+			}
+			this.renewPath();
+		} else {
+			this.move();
+		}
 	}
 
 	@Override
