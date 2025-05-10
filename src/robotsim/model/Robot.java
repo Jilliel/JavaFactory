@@ -37,10 +37,6 @@ public class Robot extends Component implements Serializable{
 		this.awaitingPath = false;
 	}
 	
-	public Position getCenter() {
-		return new Position(this.getxCoordinate() + this.radius / 2, this.getyCoordinate() + this.radius / 2);
-	}
-
 	public double getSpeed() {
 		return speed;
 	}
@@ -84,7 +80,7 @@ public class Robot extends Component implements Serializable{
 		if (this.pathFinder == null) {
 			this.pathFinder = new DijkstraPathFinder(this.getFactory());
 		}
-		List<Position> newpath = this.pathFinder.findPath(this.getCenter(), this.current);
+		List<Position> newpath = this.pathFinder.findPath(this.getPosition(), this.current);
 		if (newpath != null) {
 			this.path = newpath;
 			this.awaitingPath = false;
