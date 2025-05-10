@@ -14,8 +14,8 @@ public class Washer extends Component implements Serializable{
 	private int radius;
 	private static final ComponentStyle style = new ComponentStyle(new ComponentColor(0, 0, 255), null);
 	
-	public Washer(int x, int y, int radius, double weight, String name, Factory factory) {
-		super(x, y, name, factory);
+	public Washer(Position position, int radius, double weight, String name, Factory factory) {
+		super(position, name, factory);
 		this.weight = weight;
 		this.radius = radius;
 	}

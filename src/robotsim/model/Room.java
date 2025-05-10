@@ -18,8 +18,8 @@ public class Room extends Component implements Serializable{
 	private int height;
 	
 
-	public Room(int x, int y, int width, int height, String name, Factory factory) {
-		super(x, y, name, factory);
+	public Room(Position position, int width, int height, String name, Factory factory) {
+		super(position, name, factory);
 		this.width = width;
 		this.height = height;
 		this.doors = new ArrayList<Door>();

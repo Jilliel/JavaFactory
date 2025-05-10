@@ -18,8 +18,8 @@ public class ProductionArea extends Component implements Serializable{
 	private int height;
 	private static final ComponentStyle style = new ComponentStyle(null, new ComponentStroke(null, 1, new float[] {5,5} ));
 	
-	public ProductionArea(int x, int y, int width, int height, String name, Factory factory) {
-		super(x, y, name, factory);
+	public ProductionArea(Position position, int width, int height, String name, Factory factory) {
+		super(position, name, factory);
 		this.width = width;
 		this.height = height;
 		this.materials = new ArrayList<Washer>();
@@ -37,9 +37,9 @@ public class ProductionArea extends Component implements Serializable{
 				if (this.getFactory().canProduce(machine)) {
 					// System.out.println("Producing washer");
 					machine.setTimeLeft(ProductionMachine.getTimeToProduce());
-					this.materials.add(new Washer(machine.getX() + (machine.getWidth()/2) - ProductionMachine.getWasherRadius(),
-							machine.getY() + (machine.getHeight()/2)- ProductionMachine.getWasherRadius(),
-							ProductionMachine.getWasherRadius(),ProductionMachine.getWasherWeight(), "Washer", this.getFactory()));
+					Position washerposition = new Position(machine.getxCoordinate() + (machine.getWidth()/2) - ProductionMachine.getWasherRadius(),
+													machine.getyCoordinate() + (machine.getHeight()/2)- ProductionMachine.getWasherRadius());
+					this.materials.add(new Washer(washerposition, ProductionMachine.getWasherRadius(), ProductionMachine.getWasherWeight(), "Washer", this.getFactory()));
 					this.getFactory().notifyObservers();
 				}
 			}

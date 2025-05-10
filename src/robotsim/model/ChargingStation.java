@@ -13,8 +13,8 @@ public class ChargingStation extends Component implements Serializable{
 	private int height;
 	private int width;
 	
-	public ChargingStation(int x, int y, int width, int height, String name, Factory factory, boolean busy) {
-		super(x, y, name, factory);
+	public ChargingStation(Position position, int width, int height, String name, Factory factory, boolean busy) {
+		super(position, name, factory);
 		this.width = width;
 		this.height = height;
 		this.busy = busy;

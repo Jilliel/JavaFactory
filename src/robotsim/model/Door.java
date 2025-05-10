@@ -20,8 +20,8 @@ public class Door extends Component implements Serializable{
 	private static final ComponentStyle closedState = new ComponentStyle(new ComponentColor(0, 0, 0), new ComponentStroke(null, 3, null));
 	
 	
-	public Door(int x, int y, int width, int height, String name, Factory factory, boolean open, Room room1, Room room2) {
-		super(x, y, name, factory);
+	public Door(Position position, int width, int height, String name, Factory factory, boolean open, Room room1, Room room2) {
+		super(position, name, factory);
 		this.width = width;
 		this.height = height;
 		this.open = open;

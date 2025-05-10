@@ -19,8 +19,8 @@ public class ProductionMachine extends Component implements Serializable{
 	private static final int timeToProduce = 25;
 	private int timeLeft;
 	
-	public ProductionMachine(int x, int y, int width, int height, String name, Factory factory) {
-		super(x, y, name, factory);
+	public ProductionMachine(Position position, int width, int height, String name, Factory factory) {
+		super(position, name, factory);
 		this.width = width;
 		this.height = height;
 		this.timeLeft = ProductionMachine.timeToProduce;

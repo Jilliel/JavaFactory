@@ -27,8 +27,8 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 	private String id;
 
 	
-	public Factory(String name, int x, int y, int width, int height) {
-		super(x, y, name, null);
+	public Factory(String name, Position position, int width, int height) {
+		super(position, name, null);
 		this.robots = new ArrayList<Robot>();
 		this.rooms = new ArrayList<Room>();
 		this.width = width;
@@ -39,12 +39,12 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 	}
 	
 	public boolean canProduce(ProductionMachine machine) {
-		int targetX = machine.getX() + (machine.getWidth()/2) - ProductionMachine.getWasherRadius();
-		int targetY = machine.getY() + (machine.getHeight()/2)- ProductionMachine.getWasherRadius();
+		int targetX = machine.getxCoordinate() + (machine.getWidth()/2) - ProductionMachine.getWasherRadius();
+		int targetY = machine.getyCoordinate() + (machine.getHeight()/2)- ProductionMachine.getWasherRadius();
 		for (Room room : this.rooms) {
 			for (ProductionArea area : room.getAreas()) {
 				for (Washer washer : area.getMaterials()) {
-					if (washer.getX() == targetX && washer.getY()==targetY) {
+					if (washer.getxCoordinate() == targetX && washer.getyCoordinate()==targetY) {
 						return false;
 					}
 				}
