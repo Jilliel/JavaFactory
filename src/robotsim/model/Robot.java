@@ -9,6 +9,7 @@ import shapes.ComponentColor;
 import shapes.ComponentStyle;
 import shapes.Oval;
 
+
 public class Robot extends Component implements Serializable{
 	
 	private static final long serialVersionUID = 202505090930L;
@@ -36,6 +37,10 @@ public class Robot extends Component implements Serializable{
 		this.awaitingPath = false;
 	}
 	
+	public Position getCenter() {
+		return new Position(this.getxCoordinate() + this.radius / 2, this.getyCoordinate() + this.radius / 2);
+	}
+
 	public double getSpeed() {
 		return speed;
 	}
