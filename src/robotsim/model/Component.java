@@ -8,22 +8,27 @@ public abstract class Component implements Figure, Serializable{
 
 	private static final long serialVersionUID = 202505091314L;
 	
-	private int x;
-	private int y;
+	private Position position;
 	private String name;
 	private Factory factory;
 	
 	
-	public Component(int x, int y, String name, Factory factory) {
+	public Component(Position position, String name, Factory factory) {
 		super();
-		this.x = x;
-		this.y = y;
+		this.position = position;
 		this.name = name;
 		this.factory = factory;
 	}
 	
 	public void behave() {
-		
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+	
+	public Position getPosition() {
+		return this.position;
 	}
 	
 	public Factory getFactory() {
@@ -34,22 +39,6 @@ public abstract class Component implements Figure, Serializable{
 	@Override
 	public abstract Style getStyle();
 	
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
 
 	@Override
 	public String getName() {
@@ -64,12 +53,12 @@ public abstract class Component implements Figure, Serializable{
 	@Override
 	public int getxCoordinate() {
 		// TODO Auto-generated method stub
-		return this.x;
+		return this.position.getX();
 	}
 
 	@Override
 	public int getyCoordinate() {
 		// TODO Auto-generated method stub
-		return this.y;
+		return this.position.getY();
 	}	
 }
