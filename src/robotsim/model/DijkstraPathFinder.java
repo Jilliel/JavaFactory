@@ -1,5 +1,6 @@
 package robotsim.model;
 import java.util.List;
+import java.util.ArrayList;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
@@ -9,54 +10,72 @@ import org.jgrapht.GraphPath;
 public class DijkstraPathFinder implements FactoryPathFinder{
 	
 	private final static int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+	private static final int spatialStep = 2;
+	
 	private Factory factory;
 
-	private Graph<Position, DefaultEdge> graphe;
-	private DijkstraShortestPath<Position, DefaultEdge> pathfinder;
-
+	private Graph<GridCase, DefaultEdge> graphe;
+	private DijkstraShortestPath<GridCase, DefaultEdge> pathfinder;
+	
+	
 	public DijkstraPathFinder(Factory factory) {
 		super();
 		this.factory = factory;
 		this.graphe = new SimpleGraph<>(DefaultEdge.class);
-		this.pathfinder = new DijkstraShortestPath<>(graphe);
+		this.pathfinder = new DijkstraShortestPath<>(this.graphe);
 	}
 	
 	private void updateGraph() {
-		for (int i = 0; i < factory.getWidth() / Factory.spatialStep; i++) {
-			for (int j = 0; j < factory.getHeight() / Factory.spatialStep; i++) {
-			
-				Position position = new Position(i * Factory.spatialStep, 
-												 j * Factory.spatialStep);
+		
+		for (int i = 0; i < factory.getWidth() / spatialStep; i++) {
+			for (int j = 0; j < factory.getHeight() / spatialStep; j++) {
 				
-				if (!(factory.getValidity(position))) {
+	
+				GridCase startcase = new GridCase(i, j);
+				Position startpos = startcase.toPos(spatialStep);
+				
+	
+				if (!factory.getValidity(startpos)) {
 					continue;
-				} else if (!(this.graphe.containsVertex(position))){
-					this.graphe.addVertex(position);
+				} else if (!(this.graphe.containsVertex(startcase))){
+					this.graphe.addVertex(startcase);
 				}
 				
 				for (int[] shift : DijkstraPathFinder.directions) {
-					Position neighbor = new Position((i + shift[0]) * Factory.spatialStep, 
-							 						 (j + shift[1]) * Factory.spatialStep);
 					
-					if (!(factory.getValidity(neighbor))) {
+					GridCase nearcase = startcase.setShift(shift);
+					Position nearpos = nearcase.toPos(spatialStep);
+					
+					if (!factory.getValidity(nearpos)) {
 						continue;
-					} else if (!(this.graphe.containsVertex(neighbor))){
-						this.graphe.addVertex(neighbor);
+					} else if (!(this.graphe.containsVertex(nearcase))){
+						this.graphe.addVertex(nearcase);
 					}
 					
-					this.graphe.addEdge(position, neighbor);
+					this.graphe.addEdge(startcase, nearcase);
 				}
 			}
 		}
 	}
 	
+	private GridCase discrete(Position position) {
+		return new GridCase(position.getX() / spatialStep, position.getY() / spatialStep);
+	}
+	
 	public List<Position> findPath(Position start, Position end) {
 		this.updateGraph();
-		GraphPath<Position, DefaultEdge> path  = this.pathfinder.getPath(start, end);
-		if (path != null) {
-			return path.getVertexList();
-		} else {
+		
+		GraphPath<GridCase, DefaultEdge> path = this.pathfinder.getPath(discrete(start), discrete(end));
+		
+		if (path == null) {
+			System.out.println("No path.");
 			return null;
+		} else {
+			ArrayList<Position> finalpath = new ArrayList<Position>();
+			for (GridCase step : path.getVertexList()) {
+				finalpath.add(step.toPos(spatialStep));
+			}
+			return finalpath;
 		}
 	}
 }
