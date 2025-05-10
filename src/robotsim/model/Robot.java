@@ -84,7 +84,7 @@ public class Robot extends Component implements Serializable{
 		if (this.pathFinder == null) {
 			this.pathFinder = new DijkstraPathFinder(this.getFactory());
 		}
-		List<Position> newpath = this.pathFinder.findPath(this.getPosition(), this.current);
+		List<Position> newpath = this.pathFinder.findPath(this.getCenter(), this.current);
 		if (newpath != null) {
 			this.path = newpath;
 			this.awaitingPath = false;
@@ -108,6 +108,9 @@ public class Robot extends Component implements Serializable{
 		if (this.path.size() == 0) {
 			if (!(this.awaitingPath))  {
 				this.renewTarget();
+			}
+			if (this.current == null) {
+				return;
 			}
 			this.renewPath();
 		} else {
