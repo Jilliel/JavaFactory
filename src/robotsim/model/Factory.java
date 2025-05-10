@@ -120,49 +120,87 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 	}
 	
 	public boolean getValidity(Position position) {
-		List<Component> obstacles = this.getObstacles();
-		int x = position.getX();
-		int y = position.getY();
+		
+		int x = position.getX() + SimulatorApplication.robotRadius;
+		int y = position.getY() + SimulatorApplication.robotRadius;
 		if (x < 0 || x > this.getWidth() || y < 0 || y > this.getHeight()) {
 			return false;
 		}
-
-		for (Component obstacle : obstacles) {
-			if (obstacle instanceof Door) {
-				Door door = (Door) obstacle;
-				if (door.isOpen()) {
-					continue;
-				} else if (Math.abs(door.getxCoordinate() + door.getWidth() / 2 - x) > SimulatorApplication.robotRadius + door.getWidth() / 2) {
-					continue;
-				} else if (Math.abs(door.getyCoordinate() + door.getHeight() / 2 - y) > SimulatorApplication.robotRadius + door.getHeight() / 2) {
-					continue;
-				} else {
-					return false;
-				}
-			} else if (obstacle instanceof Room) {
-				Room room = (Room) obstacle;
-				int leftwall = room.getxCoordinate();
-				int rightwall = room.getxCoordinate() + room.getHeight();
-				if (Math.abs(x - leftwall) < SimulatorApplication.robotRadius || Math.abs(x - rightwall) < SimulatorApplication.robotRadius) {
-					return false;
-				}
-				int upperwall = room.getyCoordinate();
-				int downwall = room.getyCoordinate() + room.getHeight();
-				if (Math.abs(y - upperwall) < SimulatorApplication.robotRadius || Math.abs(y - downwall) < SimulatorApplication.robotRadius) {
-					return false;
-				}
+		
+		for (Door door : this.getDoors()) {
+			if (!door.isOpen()) { continue; }
+			int w = door.getWidth();
+			int h = door.getHeight();
+			int x0 = door.getxCoordinate();
+			int y0 = door.getyCoordinate();
+			/* The door has 2 conditions for collision*/
+			boolean cdt1 = true;
+			boolean cdt2 = true;
+			if (door.getWidth() > door.getHeight()) {
+				cdt1 = Math.abs(x0 + w / 2 - x) <= w / 2 - SimulatorApplication.robotRadius;
+				cdt2 = Math.abs(y0 + h / 2 - y) <= h / 2 + SimulatorApplication.robotRadius;
+			} else {
+				cdt1 = Math.abs(x0 + w / 2 - x) <= w / 2 + SimulatorApplication.robotRadius;
+				cdt2 = Math.abs(y0 + h / 2 - y) <= h / 2 - SimulatorApplication.robotRadius;
+			}
+			/*
+			if (position.getX() == 80 && position.getY() == 200) {
+				System.out.println(door);
+				System.out.println("Cdt1: " + cdt1 + ", Cdt2: " + cdt2);
+			}
+			*/
+			if (cdt1 && cdt2) {
+				return true;
 			}
 		}
+				
+		for (Room room : this.getRooms()) {
+			int w = room.getWidth();
+			int h = room.getHeight();
+			int x0 = room.getxCoordinate();
+			int y0 = room.getyCoordinate();
+			boolean left = Math.abs(x0 - x) < SimulatorApplication.robotRadius;
+			boolean right = Math.abs(x0 + w - x) < SimulatorApplication.robotRadius;
+			boolean up = Math.abs(y0 - y) < SimulatorApplication.robotRadius;
+			boolean down = Math.abs(y0 + h - y) < SimulatorApplication.robotRadius;
+			/* X and Y positions */
+			boolean xcontain = x0 < x + SimulatorApplication.robotRadius && x - SimulatorApplication.robotRadius < x0 + w;
+			boolean ycontain = y0 < y + SimulatorApplication.robotRadius && y - SimulatorApplication.robotRadius < y0 + h;
+			
+			
+			/* Left wall */
+			if (right && ycontain) {
+				return false;
+			}
+			/* Left wall */
+			else if (left && ycontain) {
+				return false;
+			}
+			/* Upper wall */
+			else if (up && xcontain) {
+				return false;
+			}
+			/* Down wall */
+			else if (down && xcontain) {
+				return false;
+			}
+		}
+		
 		return true;
 	}
 	
-	public List<Component> getObstacles() {
-		ArrayList<Component> obstacles = new ArrayList<Component>();
-		for (Room room : this.rooms) {
-			obstacles.addAll(room.getObstacles());
-		}
-		return obstacles;
+	public List<Room> getRooms() {
+		return rooms;
 	}
+	
+	public List<Door> getDoors() {
+		ArrayList<Door> doors = new ArrayList<Door>();
+		for (Room room : this.rooms) {
+			doors.addAll(room.getDoors());
+		}
+		return doors;
+	}
+	
 	
 	@Override
 	public Collection<Figure> getFigures() {
