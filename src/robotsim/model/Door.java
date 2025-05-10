@@ -53,6 +53,14 @@ public class Door extends Component implements Serializable{
 		this.width = width;
 	}
 	
+	public int getHeight() {
+		return height;
+	}
+	
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	
 	public boolean isOpen() {
 		return open;
 	}
