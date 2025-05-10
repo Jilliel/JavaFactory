@@ -16,6 +16,7 @@ import java.util.Arrays;
 public class SimulatorApplication {
 	
 	private static final Logger LOGGER = Logger.getLogger(SimulatorApplication.class.getName());
+	public static final int robotRadius = 5;
 	
 	public static void main(String[] args) {
 		
@@ -46,8 +47,8 @@ public class SimulatorApplication {
 		final Door door3 = new Door(new Position(450, 325), 5, 50, "Entrance", factory, false, room3, null);
 		room3.addDoor(door3);
 		
-		final Robot robot1 = new Robot(new Position(10, 10), 5, "Robot 1", factory, 0, null, new DijkstraPathFinder(factory));
-		final Robot robot2 = new Robot(new Position(40, 10), 5, "Robot 2", factory, 0, null, new DijkstraPathFinder(factory));
+		final Robot robot1 = new Robot(new Position(10, 10), robotRadius, "Robot 1", factory, 0, null, new DijkstraPathFinder(factory));
+		final Robot robot2 = new Robot(new Position(40, 10), robotRadius, "Robot 2", factory, 0, null, new DijkstraPathFinder(factory));
 		
 		factory.addRoom(room1);
 		factory.addRoom(room2);
