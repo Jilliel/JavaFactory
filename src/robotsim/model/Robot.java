@@ -20,7 +20,7 @@ public class Robot extends Component implements Serializable{
 	private List<Position> path;
 	private Position current;
 	private boolean awaitingPath;
-	private FactoryPathFinder pathFinder;
+	private transient FactoryPathFinder pathFinder = null;
 	
 	private static final ComponentStyle style = new ComponentStyle(new ComponentColor(0, 255, 0), null);
 	
@@ -76,6 +76,9 @@ public class Robot extends Component implements Serializable{
 	}
 	
 	private void renewPath() {
+		if (this.pathFinder == null) {
+			this.pathFinder = new DijkstraPathFinder(this.getFactory());
+		}
 		List<Position> newpath = this.pathFinder.findPath(this.getPosition(), this.current);
 		if (newpath != null) {
 			this.path = newpath;

@@ -1,13 +1,13 @@
 package robotsim.model;
 import java.util.List;
-import java.io.Serializable;
 
-public class DijkstraPathFinder implements FactoryPathFinder, Serializable{
+public class DijkstraPathFinder implements FactoryPathFinder{
 	
-	private static final long serialVersionUID = 202505090931L;
+	private Factory factory;
 	
-	public DijkstraPathFinder() {
+	public DijkstraPathFinder(Factory factory) {
 		super();
+		this.factory = factory;
 	}
 	
 	public List<Position> findPath(Position start, Position end) {
