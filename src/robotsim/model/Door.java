@@ -84,4 +84,8 @@ public class Door extends Component implements Serializable{
 		// TODO Auto-generated method stub
 		return new Rectangle(this.width, this.height);
 	}
+	
+	public String toString() {
+		return "Door(X: " + getxCoordinate() + ", Y: " + getyCoordinate() + ", Open: " + open + ", Width: " + width + ", Height: " + height + ").";
+	}
 }
