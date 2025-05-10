@@ -10,6 +10,7 @@ import robotsim.model.Room;
 import robotsim.model.SimulatorController;
 import robotsim.model.Position;
 import robotsim.model.DijkstraPathFinder;
+import robotsim.model.Washer;
 import java.util.logging.*;
 import java.util.Arrays;
 
@@ -47,8 +48,11 @@ public class SimulatorApplication {
 		final Door door3 = new Door(new Position(450, 325), 5, 50, "Entrance", factory, false, room3, null);
 		room3.addDoor(door3);
 		
-		final Robot robot1 = new Robot(new Position(10, 10), robotRadius, "Robot 1", factory, 0, null, new DijkstraPathFinder(factory));
-		final Robot robot2 = new Robot(new Position(40, 10), robotRadius, "Robot 2", factory, 0, null, new DijkstraPathFinder(factory));
+		final Robot robot1 = new Robot(new Position(10, 10), robotRadius, "Robot 2", factory, 0, null, new DijkstraPathFinder(factory));
+		final Robot robot2 = new Robot(new Position(40, 10), robotRadius, "Robot 1", factory, 0, null, new DijkstraPathFinder(factory));
+		final Washer tester = new Washer(new Position(90, 120), 5, 0, "Washer Tester 1", factory);
+		area1.addMaterial(tester);
+		robot2.addTarget(tester.getPosition());
 		
 		factory.addRoom(room1);
 		factory.addRoom(room2);
