@@ -68,7 +68,6 @@ public class DijkstraPathFinder implements FactoryPathFinder{
 		GraphPath<GridCase, DefaultEdge> path = this.pathfinder.getPath(discrete(start), discrete(end));
 		
 		if (path == null) {
-			System.out.println("No path.");
 			return null;
 		} else {
 			ArrayList<Position> finalpath = new ArrayList<Position>();
