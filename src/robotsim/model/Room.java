@@ -64,6 +64,15 @@ public class Room extends Component implements Serializable{
 		this.stations.add(station);
 	}
 	
+	public List<Component> getObstacles() {
+		ArrayList<Component> obstacles = new ArrayList<Component>();
+		/* Add itself */
+		obstacles.add(this);
+		/* Add the doors */
+		obstacles.addAll(this.doors);
+		return obstacles;
+	}
+	
 	public List<Component> getComponents() {
 		ArrayList <Component> result = new ArrayList<Component>();
 		/* Add itself */
@@ -73,21 +82,21 @@ public class Room extends Component implements Serializable{
 		/* Add the doors */
 		result.addAll(this.doors);
 		/* Add areas' components figures */
-		for (int i=0; i<this.areas.size(); i++) {
-			result.addAll(this.areas.get(i).getComponents());
+		for (ProductionArea area : this.areas) {
+			result.addAll(area.getComponents());
 		}
 		return result;
 	}
 	
 	public void behave() {
-		for (int i=0; i < this.doors.size(); i++) {
-			this.doors.get(i).behave();
+		for (Door door : this.doors) {
+			door.behave();
 		}
-		for (int i=0; i < this.areas.size(); i++) {
-			this.areas.get(i).behave();
+		for (ProductionArea area : this.areas) {
+			area.behave();
 		}
-		for (int i=0; i < this.stations.size(); i++) {
-			this.stations.get(i).behave();
+		for (ChargingStation station : this.stations) {
+			station.behave();
 		}
 	}
 

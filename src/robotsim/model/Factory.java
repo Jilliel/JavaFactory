@@ -18,14 +18,15 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 	
 	private int width;
 	private int height;
+	
 	private List<Room> rooms;
 	private List<Robot> robots;
 	
 	private transient List<Observer> observers;
 	private boolean simulationRunning;
-
+	
 	private String id;
-
+	
 	
 	public Factory(String name, Position position, int width, int height) {
 		super(position, name, null);
@@ -82,8 +83,8 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 	}
 	
 	private boolean checkRobotName(String name) {
-		for (int i=0; i < this.robots.size(); i++) {
-			if (name == this.robots.get(i).getName()) {
+		for (Robot robot : this.robots) {
+			if (name == robot.getName()) {
 				return false;
 			}
 		}
@@ -100,8 +101,8 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 	}
 	
 	private boolean checkRoomName(String name) {
-		for (int i=0; i < this.rooms.size(); i++) {
-			if (name == this.rooms.get(i).getName()) {
+		for (Room room : this.rooms) {
+			if (name == room.getName()) {
 				return false;
 			}
 		}
@@ -117,25 +118,33 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		}
 	}
 	
+	public List<Component> getObstacles() {
+		ArrayList<Component> obstacles = new ArrayList<Component>();
+		for (Room room : this.rooms) {
+			obstacles.addAll(room.getObstacles());
+		}
+		return obstacles;
+	}
+	
 	@Override
 	public Collection<Figure> getFigures() {
 		ArrayList<Figure> elements = new ArrayList<Figure>();
 		/* Add the robots */
 		elements.addAll(this.robots);
 		/* Add rooms' components */
-		for (int i=0; i < this.rooms.size(); i++) {
-			elements.addAll(this.rooms.get(i).getComponents());
+		for (Room room : this.rooms) {
+			elements.addAll(room.getComponents());
 		}
 		return (Collection<Figure>) elements;
 	}
 	
 	@Override
 	public void behave() {
-		for (int i=0; i < this.robots.size(); i++) {
-			this.robots.get(i).behave();
+		for (Robot robot : this.robots) {
+			robot.behave();
 		}
-		for (int i=0; i < this.rooms.size(); i++) {
-			this.rooms.get(i).behave();
+		for (Room room : this.rooms) {
+			room.behave();
 		}
 	}
 
