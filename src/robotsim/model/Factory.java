@@ -18,7 +18,6 @@ import java.io.Serializable;
 public class Factory extends Component implements Canvas, Serializable, Observable {
 	
 	private static final long serialVersionUID = 202505090919L;
-	public static final int spatialStep = 3;
 	
 	private String id;
 	
