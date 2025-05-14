@@ -259,7 +259,7 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 			behave();
 			
 			try {
-				Thread.sleep(200);
+				Thread.sleep(50);
 			}
 			catch (InterruptedException ex) {
 				ex.printStackTrace();
