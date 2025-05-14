@@ -246,11 +246,11 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 				boolean ynear = false;
 				
 				if (w > h) {
-					xnear = dx < w - SimulatorApplication.robotRadius;
-					ynear = dy < h + SimulatorApplication.robotRadius;
+					xnear = dx < w - 2 * SimulatorApplication.robotRadius;
+					ynear = dy < h + 2 * SimulatorApplication.robotRadius;
 				} else {
-					xnear = dx < w + SimulatorApplication.robotRadius;
-					ynear = dy < h - SimulatorApplication.robotRadius;
+					xnear = dx < w + 2 * SimulatorApplication.robotRadius;
+					ynear = dy < h - 2 * SimulatorApplication.robotRadius;
 				}
 				
 				boolean near = xnear && ynear;
