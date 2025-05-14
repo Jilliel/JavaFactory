@@ -40,6 +40,10 @@ public class Washer extends Component implements Serializable{
 		this.owner = null;
 	}
 	
+	public boolean isOwned() {
+		return this.owner != null;
+	}
+	
 	public int getRadius() {
 		return radius;
 	}
