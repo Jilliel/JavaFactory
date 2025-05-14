@@ -261,6 +261,20 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 			}
 		}
 	}
+	
+	public boolean collide(Robot source, Position next) {
+		for (Robot robot : this.robots) {
+			if (robot == source) {continue;}
+			Position pos = robot.getPosition();
+			double dx2 = Math.pow(pos.getX() - next.getX(), 2);
+			double dy2 = Math.pow(pos.getY() - next.getY(), 2);
+			if (dx2 + dy2 <= Math.pow(2 * SimulatorApplication.robotRadius, 2)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	public void behave() {
 		this.assignRobos();
@@ -307,7 +321,7 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		while (isSimulationRunning()) {
 			behave();
 			try {
-				Thread.sleep(50);
+				Thread.sleep(20);
 			}
 			catch (InterruptedException ex) {
 				ex.printStackTrace();

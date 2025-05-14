@@ -24,6 +24,7 @@ public class Robot extends Component implements Serializable{
 	private boolean busy;
 	private boolean delivering;
 	private boolean awaitingpath;
+	private boolean locked;
 	
 	private static final ComponentStyle style = new ComponentStyle(new ComponentColor(0, 255, 0), null);
 	
@@ -37,6 +38,7 @@ public class Robot extends Component implements Serializable{
 		this.washer = null;
 		this.delivering = false;
 		this.pathFinder = pathFinder;
+		this.locked = false;
 		this.awaitingpath = false;
 		this.path = new ArrayList<Position>();
 	}
@@ -99,14 +101,18 @@ public class Robot extends Component implements Serializable{
 	private void move() {
 		if (this.path.size() > 0) {
 			Position next = this.getNextOnPath();
-			this.setPosition(next);
+			if (this.getFactory().collide(this, next)) {
+				this.locked = true;
+			} else {
+				this.setPosition(next);
+			}
 		}
 	}
 	
 	public void behave() {
-		if (this.washer == null) {
+		if (this.locked || this.washer == null) {
 			return;
-		}
+		} 
 		
 		if (this.path.size() == 0) {
 			if (this.awaitingpath) {
