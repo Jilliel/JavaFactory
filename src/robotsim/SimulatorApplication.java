@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class SimulatorApplication {
 	
 	private static final Logger LOGGER = Logger.getLogger(SimulatorApplication.class.getName());
-	public static final int robotRadius = 8;
+	public static final int robotRadius = 7;
 	
 	public static void main(String[] args) {
 		
@@ -25,12 +25,14 @@ public class SimulatorApplication {
 		
 		final Factory factory = new Factory("Factory", new Position(0, 0), 500, 500);
 		
-		final Room room1 = new Room(new Position(25, 50), 150, 150, "Production Room 1", factory);
-		final ProductionArea area1 = new ProductionArea(new Position(50, 75), 100, 100, "Production Area 1", factory);
-		final ProductionMachine machine1 = new ProductionMachine(new Position(75, 100), 50, 50, "Machine 1", factory);
+		final Room room1 = new Room(new Position(50, 50), 150, 150, "Production Room 1", factory);
+		final ProductionArea area1 = new ProductionArea(new Position(75, 75), 100, 100, "Production Area 1", factory);
+		final Washer washer = new Washer(new Position(80, 160), 5, 0, "Washer", factory);
+		area1.addMaterial(washer);
+		final ProductionMachine machine1 = new ProductionMachine(new Position(100, 100), 50, 50, "Machine 1", factory);
 		area1.addMachine(machine1);
 		room1.addArea(area1);
-		final Door door1 = new Door(new Position(50, 200), 50, 5, "Entrance", factory, room1, null);
+		final Door door1 = new Door(new Position(75, 200), 50, 5, "Entrance", factory, room1, null);
 		room1.addDoor(door1);
 		
 		final Room room2 = new Room(new Position(300, 50), 150, 150, "Production Room 2", factory);
