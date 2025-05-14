@@ -79,7 +79,14 @@ public class Room extends Component implements Serializable{
 	public void addStation(ChargingStation station) {
 		this.stations.add(station);
 	}
-
+	
+	public List<Washer> getMaterials() {
+		ArrayList<Washer> result = new ArrayList<Washer>();
+		for (ProductionArea area : this.areas) {
+			result.addAll(area.getMaterials());
+		}
+		return result;
+	}
 	
 	public List<Component> getComponents() {
 		ArrayList <Component> result = new ArrayList<Component>();
