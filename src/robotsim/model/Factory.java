@@ -201,6 +201,13 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		return doors;
 	}
 	
+	public List<Washer> getWashers() {
+		ArrayList<Washer> result = new ArrayList<Washer>();
+		for (Room room: this.rooms) {
+			result.addAll(room.getMaterials());
+		}
+		return result;
+	}
 	
 	@Override
 	public Collection<Figure> getFigures() {
@@ -214,8 +221,25 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		return (Collection<Figure>) elements;
 	}
 	
+	private void assignation() {
+		for (Washer washer : this.getWashers()) {
+			if (washer.isOwned()) {
+				continue;
+			}
+			for (Robot robot: this.robots) {
+				if (!robot.isBusy()) {
+					robot.setBusy(true);
+					robot.addTarget(washer.getPosition());
+					washer.setOwner(robot);
+					break;
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void behave() {
+		this.assignation();
 		for (Robot robot : this.robots) {
 			robot.behave();
 		}
