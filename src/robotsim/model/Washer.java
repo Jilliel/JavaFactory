@@ -12,12 +12,26 @@ public class Washer extends Component implements Serializable{
 	private static final long serialVersionUID = 202505090923L;
 	private double weight;
 	private int radius;
+	private boolean picked;
+	private Robot owner;
 	private static final ComponentStyle style = new ComponentStyle(new ComponentColor(0, 0, 255), null);
 	
 	public Washer(Position position, int radius, double weight, String name, Factory factory) {
 		super(position, name, factory);
 		this.weight = weight;
 		this.radius = radius;
+		this.picked = false;
+		this.owner = null;
+	}
+	
+	public void setOwner(Robot owner) {
+		this.picked = true;
+		this.owner = owner;
+	}
+	
+	public void releaseOwner() {
+		this.picked = false;
+		this.owner = null;
 	}
 	
 	public int getRadius() {
@@ -45,6 +59,13 @@ public class Washer extends Component implements Serializable{
 	public Shape getShape() {
 		// TODO Auto-generated method stub
 		return new Oval(radius, radius);
+	}
+	
+	@Override
+	public void behave() {
+		if (this.picked && this.owner != null) {
+			this.setPosition(this.owner.getPosition());
+		}
 	}
 	
 }
