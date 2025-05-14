@@ -1,8 +1,8 @@
 package robotsim.model;
 import java.io.Serializable;
-
 import fr.tp.inf112.projects.canvas.model.Shape;
 import fr.tp.inf112.projects.canvas.model.Style;
+import robotsim.SimulatorApplication;
 import shapes.ComponentColor;
 import shapes.ComponentStyle;
 import shapes.Oval;
@@ -74,8 +74,10 @@ public class Washer extends Component implements Serializable{
 	@Override
 	public void behave() {
 		if (this.picked && this.owner != null) {
-			this.setPosition(this.owner.getPosition());
+			Position topleft = this.owner.getPosition();
+			int xcenter = topleft.getX() + SimulatorApplication.robotRadius - this.radius;
+			int ycenter = topleft.getY() + SimulatorApplication.robotRadius - this.radius;
+			this.setPosition(new Position(xcenter, ycenter));
 		}
 	}
-	
 }
