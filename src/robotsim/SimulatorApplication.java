@@ -8,6 +8,7 @@ import robotsim.model.ProductionMachine;
 import robotsim.model.Robot;
 import robotsim.model.Room;
 import robotsim.model.SimulatorController;
+import robotsim.model.Washer;
 import robotsim.model.Position;
 import robotsim.model.DijkstraPathFinder;
 import java.util.logging.*;
@@ -16,7 +17,7 @@ import java.util.Arrays;
 public class SimulatorApplication {
 	
 	private static final Logger LOGGER = Logger.getLogger(SimulatorApplication.class.getName());
-	public static final int robotRadius = 7;
+	public static final int robotRadius = 8;
 	
 	public static void main(String[] args) {
 		
