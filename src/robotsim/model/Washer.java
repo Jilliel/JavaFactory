@@ -12,8 +12,8 @@ public class Washer extends Component implements Serializable{
 	private static final long serialVersionUID = 202505090923L;
 	private double weight;
 	private int radius;
-	private boolean picked;
 	private Robot owner;
+	private boolean picked;
 	private static final ComponentStyle style = new ComponentStyle(new ComponentColor(0, 0, 255), null);
 	
 	public Washer(Position position, int radius, double weight, String name, Factory factory) {
@@ -24,13 +24,19 @@ public class Washer extends Component implements Serializable{
 		this.owner = null;
 	}
 	
-	public void setOwner(Robot owner) {
+	public void pick() {
 		this.picked = true;
+	}
+	
+	public void drop() {
+		this.picked = false;
+	}
+	
+	public void setOwner(Robot owner) {
 		this.owner = owner;
 	}
 	
 	public void releaseOwner() {
-		this.picked = false;
 		this.owner = null;
 	}
 	
