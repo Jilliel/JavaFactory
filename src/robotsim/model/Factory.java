@@ -228,9 +228,7 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 			}
 			for (Robot robot: this.robots) {
 				if (!robot.isBusy()) {
-					robot.setBusy(true);
-					robot.addTarget(washer.getPosition());
-					washer.setOwner(robot);
+					robot.assign(washer);
 					break;
 				}
 			}

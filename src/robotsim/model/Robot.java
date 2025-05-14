@@ -17,12 +17,13 @@ public class Robot extends Component implements Serializable{
 	private double speed;
 	private Room room;
 	private int radius;
-	private List<Position> targets;
 	private List<Position> path;
-	private Position current;
-	private boolean awaitingPath;
+	private Washer washer;
+	private Position target;
 	private transient FactoryPathFinder pathFinder = null;
 	private boolean busy;
+	private boolean delivering;
+	private boolean awaitingpath;
 	
 	private static final ComponentStyle style = new ComponentStyle(new ComponentColor(0, 255, 0), null);
 	
@@ -31,16 +32,13 @@ public class Robot extends Component implements Serializable{
 		this.speed = speed;
 		this.radius = radius;
 		this.room = room;
-		this.targets = new ArrayList<Position>();
-		this.current = null;
-		this.path = new ArrayList<Position>();
-		this.pathFinder = pathFinder;
-		this.awaitingPath = false;
 		this.busy = false;
-	}
-	
-	public void setBusy(boolean busy) {
-		this.busy = busy;
+		this.target = null;
+		this.washer = null;
+		this.delivering = false;
+		this.pathFinder = pathFinder;
+		this.awaitingpath = false;
+		this.path = new ArrayList<Position>();
 	}
 	
 	public boolean isBusy() {
@@ -73,27 +71,24 @@ public class Robot extends Component implements Serializable{
 		return Robot.style;
 	}
 	
-	public void addTarget(Position target) {
-		this.targets.add(target);
+	public void assign(Washer washer) {
+		this.busy = true;
+		this.washer = washer;
+		this.target = washer.getPosition();
+		this.awaitingpath = true;
+		this.washer.setOwner(this);
 	}
-	
-	private void renewTarget() {
-		if (this.targets.size() > 0) {
-			this.current = this.targets.remove(0);	
-			this.awaitingPath = true;
-		} else {
-			this.current = null;
-		}
-	}
-	
-	private void renewPath() {
+		
+	private void findPath() {
 		if (this.pathFinder == null) {
 			this.pathFinder = new DijkstraPathFinder(this.getFactory());
 		}
-		List<Position> newpath = this.pathFinder.findPath(this.getPosition(), this.current);
+		List<Position> newpath = this.pathFinder.findPath(this.getPosition(), this.target);
 		if (newpath != null) {
 			this.path = newpath;
-			this.awaitingPath = false;
+			this.awaitingpath = false;
+		} else {
+			this.awaitingpath = true;
 		}
 	}
 	
@@ -102,26 +97,36 @@ public class Robot extends Component implements Serializable{
 	}
 	
 	private void move() {
-		this.setPosition(this.getNextOnPath());
+		if (this.path.size() > 0) {
+			Position next = this.getNextOnPath();
+			this.setPosition(next);
+		}
 	}
 	
 	public void behave() {
-		if (this.current == null) {
-			this.renewTarget();
+		if (this.washer == null) {
 			return;
 		}
 		
 		if (this.path.size() == 0) {
-			if (!(this.awaitingPath))  {
-				this.renewTarget();
+			if (this.awaitingpath) {
+				this.findPath();
+			} else if (!this.delivering) {
+				// Find a delivering zone  (Experimental)
+				this.target = new Position(10, 10);
+				// Pick the washer
+				this.washer.pick();
+				// Setup path
+				this.delivering = true;
+				this.findPath();
+			} else { 
+				this.busy = false;
+				this.target = null;
+				this.washer.drop();
+				this.delivering = false;
 			}
-			if (this.current == null) {
-				return;
-			}
-			this.renewPath();
-		} else {
-			this.move();
 		}
+		this.move();
 	}
 
 	@Override
