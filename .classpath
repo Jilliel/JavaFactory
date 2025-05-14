@@ -7,7 +7,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="src/libs/canvas-viewer.jar"/>
-	<classpathentry kind="lib" path="C:/Users/eloan/OneDrive/Télécom/1A/Java/JavaFactory/src/libs/jgrapht-core-1.5.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/eloan/OneDrive/Télécom/1A/Java/JavaFactory/src/libs/jheaps-0.14.jar"/>
+	<classpathentry kind="lib" path="src/libs/jgrapht-core-1.5.2.jar"/>
+	<classpathentry kind="lib" path="src/libs/jheaps-0.14.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
