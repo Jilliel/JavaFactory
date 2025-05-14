@@ -128,28 +128,22 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		}
 		
 		for (Door door : this.getDoors()) {
-			if (!door.isOpen()) { continue; }
+			//if (!door.isOpen()) { continue; }
 			int w = door.getWidth();
 			int h = door.getHeight();
 			int x0 = door.getxCoordinate();
 			int y0 = door.getyCoordinate();
 			/* The door has 2 conditions for collision*/
-			boolean cdt1 = true;
-			boolean cdt2 = true;
-			if (door.getWidth() > door.getHeight()) {
-				cdt1 = Math.abs(x0 + w / 2 - x) <= w / 2 - SimulatorApplication.robotRadius;
-				cdt2 = Math.abs(y0 + h / 2 - y) <= h / 2 + SimulatorApplication.robotRadius;
+			boolean xnear = true;
+			boolean ynear = true;
+			if (w > h) {
+				xnear = Math.abs(x0 + w / 2 - x) <= w / 2 - SimulatorApplication.robotRadius;
+				ynear = Math.abs(y0 + h / 2 - y) <= h / 2 + SimulatorApplication.robotRadius;
 			} else {
-				cdt1 = Math.abs(x0 + w / 2 - x) <= w / 2 + SimulatorApplication.robotRadius;
-				cdt2 = Math.abs(y0 + h / 2 - y) <= h / 2 - SimulatorApplication.robotRadius;
+				xnear = Math.abs(x0 + w / 2 - x) <= w / 2 + SimulatorApplication.robotRadius;
+				ynear = Math.abs(y0 + h / 2 - y) <= h / 2 - SimulatorApplication.robotRadius;
 			}
-			/*
-			if (position.getX() == 80 && position.getY() == 200) {
-				System.out.println(door);
-				System.out.println("Cdt1: " + cdt1 + ", Cdt2: " + cdt2);
-			}
-			*/
-			if (cdt1 && cdt2) {
+			if (xnear && ynear) {
 				return true;
 			}
 		}
@@ -221,7 +215,7 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		return (Collection<Figure>) elements;
 	}
 	
-	private void assignation() {
+	private void assignRobos() {
 		for (Washer washer : this.getWashers()) {
 			if (washer.isOwned()) {
 				continue;
@@ -235,9 +229,42 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		}
 	}
 	
+	private void handleDoors() {
+		for (Door door : this.getDoors()) {
+			int w = door.getWidth();
+			int h = door.getHeight();
+			int x0 = door.getxCoordinate();
+			int y0 = door.getyCoordinate();
+			
+			for (Robot robot : this.robots) {
+				int x = robot.getPosition().getX() + SimulatorApplication.robotRadius;
+				int y = robot.getPosition().getY() + SimulatorApplication.robotRadius;
+				int dx = Math.abs(x0+w/2-x);
+				int dy = Math.abs(y0+h/2-y);
+				/* The door has 2 conditions for collision*/
+				boolean xnear = false; 
+				boolean ynear = false;
+				
+				if (w > h) {
+					xnear = dx < w - SimulatorApplication.robotRadius;
+					ynear = dy < h + SimulatorApplication.robotRadius;
+				} else {
+					xnear = dx < w + SimulatorApplication.robotRadius;
+					ynear = dy < h - SimulatorApplication.robotRadius;
+				}
+				
+				boolean near = xnear && ynear;
+				door.setOpen(near);
+				if (near) {
+					break;
+				}
+			}
+		}
+	}
 	@Override
 	public void behave() {
-		this.assignation();
+		this.assignRobos();
+		this.handleDoors();
 		for (Robot robot : this.robots) {
 			robot.behave();
 		}
@@ -245,7 +272,7 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 			room.behave();
 		}
 	}
-
+	
 	@Override
 	public boolean addObserver(Observer observer) {
 		if (this.observers == null) {
@@ -279,7 +306,6 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		this.simulationRunning = true;
 		while (isSimulationRunning()) {
 			behave();
-			
 			try {
 				Thread.sleep(50);
 			}
