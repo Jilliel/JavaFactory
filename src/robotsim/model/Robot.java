@@ -22,6 +22,7 @@ public class Robot extends Component implements Serializable{
 	private Position current;
 	private boolean awaitingPath;
 	private transient FactoryPathFinder pathFinder = null;
+	private boolean busy;
 	
 	private static final ComponentStyle style = new ComponentStyle(new ComponentColor(0, 255, 0), null);
 	
@@ -35,6 +36,15 @@ public class Robot extends Component implements Serializable{
 		this.path = new ArrayList<Position>();
 		this.pathFinder = pathFinder;
 		this.awaitingPath = false;
+		this.busy = false;
+	}
+	
+	public void setBusy(boolean busy) {
+		this.busy = busy;
+	}
+	
+	public boolean isBusy() {
+		return this.busy;
 	}
 	
 	public double getSpeed() {
