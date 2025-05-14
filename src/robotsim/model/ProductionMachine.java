@@ -16,7 +16,7 @@ public class ProductionMachine extends Component implements Serializable{
 	private int height;
 	private static final int washerRadius = 5;
 	private static final float washerWeight = 1;
-	private static final int timeToProduce = 25;
+	private static final int timeToProduce = 200;
 	private int timeLeft;
 	
 	public ProductionMachine(Position position, int width, int height, String name, Factory factory) {
