@@ -32,6 +32,10 @@ public class Washer extends Component implements Serializable{
 		this.picked = false;
 	}
 	
+	public boolean isPicked() {
+		return this.picked;
+	}
+	
 	public void setOwner(Robot owner) {
 		this.owner = owner;
 	}

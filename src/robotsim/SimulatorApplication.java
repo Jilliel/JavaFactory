@@ -8,6 +8,7 @@ import robotsim.model.ProductionMachine;
 import robotsim.model.Robot;
 import robotsim.model.Room;
 import robotsim.model.SimulatorController;
+import robotsim.model.VendingMachine;
 import robotsim.model.Washer;
 import robotsim.model.Position;
 import robotsim.model.DijkstraPathFinder;
@@ -53,11 +54,14 @@ public class SimulatorApplication {
 		final Robot robot1 = new Robot(new Position(10, 10), robotRadius, "Robot 2", factory, 0, null, new DijkstraPathFinder(factory));
 		final Robot robot2 = new Robot(new Position(40, 10), robotRadius, "Robot 1", factory, 0, null, new DijkstraPathFinder(factory));
 		
+		final VendingMachine Vmachine = new VendingMachine(new Position(20, 350), 80, 100, "Vending Machine", factory);
+		
 		factory.addRoom(room1);
 		factory.addRoom(room2);
 		factory.addRoom(room3);
 		factory.addRobot(robot1);
 		factory.addRobot(robot2);
+		factory.addVendingMacchine(Vmachine);
 	
 		final SimulatorController controller = new SimulatorController(factory);
 		

@@ -119,7 +119,7 @@ public class Robot extends Component implements Serializable{
 				this.findPath();
 			} else if (!this.delivering) {
 				// Find a delivering zone  (Experimental)
-				this.target = new Position(10, 10);
+				this.target = this.getFactory().getDeliveryPoint();
 				// Pick the washer
 				this.washer.pick();
 				// Setup path

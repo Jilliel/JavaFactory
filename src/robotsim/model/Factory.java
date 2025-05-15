@@ -28,6 +28,7 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 	private List<Robot> robots;
 	
 	private transient List<Observer> observers;
+	private List<VendingMachine> vendingMachines;
 	private boolean simulationRunning;	
 	
 	public Factory(String name, Position position, int width, int height) {
@@ -37,6 +38,7 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		this.rooms = new ArrayList<Room>();
 		this.robots = new ArrayList<Robot>();
 		this.observers = new ArrayList<Observer>();
+		this.vendingMachines = new ArrayList<VendingMachine>();
 		this.simulationRunning = false;
 	}
 	
@@ -212,10 +214,11 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		for (Room room : this.rooms) {
 			elements.addAll(room.getComponents());
 		}
+		elements.addAll(this.vendingMachines);
 		return (Collection<Figure>) elements;
 	}
 	
-	private void assignRobos() {
+	private void assignRobots() {
 		for (Washer washer : this.getWashers()) {
 			if (washer.isOwned()) {
 				continue;
@@ -277,13 +280,16 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 	
 	@Override
 	public void behave() {
-		this.assignRobos();
+		this.assignRobots();
 		this.handleDoors();
 		for (Robot robot : this.robots) {
 			robot.behave();
 		}
 		for (Room room : this.rooms) {
 			room.behave();
+		}
+		for (VendingMachine machine : this.vendingMachines) {
+			machine.behave();
 		}
 	}
 	
@@ -348,4 +354,17 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		// TODO Auto-generated method stub
 		return new Rectangle(this.width, this.height);
 	}
+	
+	public Position getDeliveryPoint() {
+		return new Position(50,400);
+	}
+
+	public List<VendingMachine> getVendingMachines() {
+		return vendingMachines;
+	}
+	
+	public void addVendingMacchine(VendingMachine machine) {
+		this.vendingMachines.add(machine);
+	}
+	
 }

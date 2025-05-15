@@ -96,4 +96,8 @@ public class ProductionArea extends Component implements Serializable{
 		// TODO Auto-generated method stub
 		return new Rectangle(this.width, this.height);
 	}
+	
+	public void removeWasher(Washer washer) {
+		this.materials.remove(washer);
+	}
 }
