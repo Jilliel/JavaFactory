@@ -29,7 +29,10 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 	
 	private transient List<Observer> observers;
 	private List<VendingMachine> vendingMachines;
+	private List<Conveyor> conveyors;
 	private boolean simulationRunning;	
+	
+	private int counter;
 	
 	public Factory(String name, Position position, int width, int height) {
 		super(position, name, null);
@@ -39,6 +42,7 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		this.robots = new ArrayList<Robot>();
 		this.observers = new ArrayList<Observer>();
 		this.vendingMachines = new ArrayList<VendingMachine>();
+		this.conveyors = new ArrayList<Conveyor>();
 		this.simulationRunning = false;
 	}
 	
@@ -356,15 +360,41 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 	}
 	
 	public Position getDeliveryPoint() {
-		return new Position(50,400);
+		if (this.getConveyors().size() > 0) {
+			if (counter == this.getConveyors().size() - 1) {
+				counter = -1;
+			}
+			counter = counter + 1;
+			return this.getConveyors().get(counter).getDeliveryPoint();
+		}
+		else if (this.getVendingMachines().size() > 0) {
+			if (counter == this.getVendingMachines().size() - 1) {
+				counter = -1;
+			}
+			counter = counter + 1;
+			return this.getVendingMachines().get(counter).getDeliveryPoint();
+		}
+		else {
+			return new Position(10,10);
+		}
+		
 	}
 
 	public List<VendingMachine> getVendingMachines() {
-		return vendingMachines;
+		return this.vendingMachines;
 	}
 	
 	public void addVendingMacchine(VendingMachine machine) {
 		this.vendingMachines.add(machine);
 	}
+	
+	public List<Conveyor> getConveyors() {
+		return this.conveyors;
+	}
+	
+	public void addConveyor(Conveyor conveyor) {
+		this.conveyors.add(conveyor);
+	}
+	
 	
 }

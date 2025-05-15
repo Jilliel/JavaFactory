@@ -75,5 +75,9 @@ public class VendingMachine extends Component implements Serializable{
 			this.timeLeft = this.timeLeft - 1;
 		}
 	}
+	
+	public Position getDeliveryPoint() {
+		return new Position(this.getxCoordinate() + (this.getWidth()/2), this.getyCoordinate() + (this.getHeight())/2);
+	}
 
 }
