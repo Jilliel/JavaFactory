@@ -127,8 +127,8 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 	
 	public boolean getValidity(Position position) {
 		
-		int x = position.getX() + SimulatorApplication.robotRadius;
-		int y = position.getY() + SimulatorApplication.robotRadius;
+		int x = position.getX() + Robot.defaultRobotRadius;
+		int y = position.getY() + Robot.defaultRobotRadius;
 		if (x < 0 || x > this.getWidth() || y < 0 || y > this.getHeight()) {
 			return false;
 		}
@@ -143,11 +143,11 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 			boolean xnear = true;
 			boolean ynear = true;
 			if (w > h) {
-				xnear = Math.abs(x0 + w / 2 - x) <= w / 2 - SimulatorApplication.robotRadius;
-				ynear = Math.abs(y0 + h / 2 - y) <= h / 2 + SimulatorApplication.robotRadius;
+				xnear = Math.abs(x0 + w / 2 - x) <= w / 2 - Robot.defaultRobotRadius;
+				ynear = Math.abs(y0 + h / 2 - y) <= h / 2 + Robot.defaultRobotRadius;
 			} else {
-				xnear = Math.abs(x0 + w / 2 - x) <= w / 2 + SimulatorApplication.robotRadius;
-				ynear = Math.abs(y0 + h / 2 - y) <= h / 2 - SimulatorApplication.robotRadius;
+				xnear = Math.abs(x0 + w / 2 - x) <= w / 2 + Robot.defaultRobotRadius;
+				ynear = Math.abs(y0 + h / 2 - y) <= h / 2 - Robot.defaultRobotRadius;
 			}
 			if (xnear && ynear) {
 				return true;
@@ -159,13 +159,13 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 			int h = room.getHeight();
 			int x0 = room.getxCoordinate();
 			int y0 = room.getyCoordinate();
-			boolean left = Math.abs(x0 - x) < SimulatorApplication.robotRadius;
-			boolean right = Math.abs(x0 + w - x) < SimulatorApplication.robotRadius;
-			boolean up = Math.abs(y0 - y) < SimulatorApplication.robotRadius;
-			boolean down = Math.abs(y0 + h - y) < SimulatorApplication.robotRadius;
+			boolean left = Math.abs(x0 - x) < Robot.defaultRobotRadius;
+			boolean right = Math.abs(x0 + w - x) < Robot.defaultRobotRadius;
+			boolean up = Math.abs(y0 - y) < Robot.defaultRobotRadius;
+			boolean down = Math.abs(y0 + h - y) < Robot.defaultRobotRadius;
 			/* X and Y positions */
-			boolean xcontain = x0 < x + SimulatorApplication.robotRadius && x - SimulatorApplication.robotRadius < x0 + w;
-			boolean ycontain = y0 < y + SimulatorApplication.robotRadius && y - SimulatorApplication.robotRadius < y0 + h;
+			boolean xcontain = x0 < x + Robot.defaultRobotRadius && x - Robot.defaultRobotRadius < x0 + w;
+			boolean ycontain = y0 < y + Robot.defaultRobotRadius && y - Robot.defaultRobotRadius < y0 + h;
 			
 			
 			/* Left wall */
@@ -212,6 +212,7 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 	@Override
 	public Collection<Figure> getFigures() {
 		ArrayList<Figure> elements = new ArrayList<Figure>();
+		elements.addAll(conveyors);
 		/* Add the robots */
 		elements.addAll(this.robots);
 		/* Add rooms' components */
@@ -244,8 +245,8 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 			int y0 = door.getyCoordinate();
 			
 			for (Robot robot : this.robots) {
-				int x = robot.getPosition().getX() + SimulatorApplication.robotRadius;
-				int y = robot.getPosition().getY() + SimulatorApplication.robotRadius;
+				int x = robot.getPosition().getX() + Robot.defaultRobotRadius;
+				int y = robot.getPosition().getY() + Robot.defaultRobotRadius;
 				int dx = Math.abs(x0+w/2-x);
 				int dy = Math.abs(y0+h/2-y);
 				/* The door has 2 conditions for collision*/
@@ -253,11 +254,11 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 				boolean ynear = false;
 				
 				if (w > h) {
-					xnear = dx < w - 2 * SimulatorApplication.robotRadius;
-					ynear = dy < h + 2 * SimulatorApplication.robotRadius;
+					xnear = dx < w - 2 * Robot.defaultRobotRadius;
+					ynear = dy < h + 2 * Robot.defaultRobotRadius;
 				} else {
-					xnear = dx < w + 2 * SimulatorApplication.robotRadius;
-					ynear = dy < h - 2 * SimulatorApplication.robotRadius;
+					xnear = dx < w + 2 * Robot.defaultRobotRadius;
+					ynear = dy < h - 2 * Robot.defaultRobotRadius;
 				}
 				
 				boolean near = xnear && ynear;
@@ -275,7 +276,7 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 			Position pos = robot.getPosition();
 			double dx2 = Math.pow(pos.getX() - next.getX(), 2);
 			double dy2 = Math.pow(pos.getY() - next.getY(), 2);
-			if (dx2 + dy2 <= Math.pow(2 * SimulatorApplication.robotRadius, 2)) {
+			if (dx2 + dy2 <= Math.pow(2 * Robot.defaultRobotRadius, 2)) {
 				return true;
 			}
 		}
@@ -294,6 +295,9 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		}
 		for (VendingMachine machine : this.vendingMachines) {
 			machine.behave();
+		}
+		for (Conveyor conveyor : this.conveyors) {
+			conveyor.behave();
 		}
 	}
 	
@@ -361,14 +365,14 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 	
 	public Position getDeliveryPoint() {
 		if (this.getConveyors().size() > 0) {
-			if (counter == this.getConveyors().size() - 1) {
+			if (counter >= this.getConveyors().size() - 1) {
 				counter = -1;
 			}
 			counter = counter + 1;
 			return this.getConveyors().get(counter).getDeliveryPoint();
 		}
 		else if (this.getVendingMachines().size() > 0) {
-			if (counter == this.getVendingMachines().size() - 1) {
+			if (counter >= this.getVendingMachines().size() - 1) {
 				counter = -1;
 			}
 			counter = counter + 1;

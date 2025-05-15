@@ -1,6 +1,7 @@
 package robotsim;
 import fr.tp.inf112.projects.canvas.view.CanvasViewer;
 import robotsim.model.ChargingStation;
+import robotsim.model.Conveyor;
 import robotsim.model.Door;
 import robotsim.model.Factory;
 import robotsim.model.ProductionArea;
@@ -13,14 +14,14 @@ import robotsim.model.Washer;
 import robotsim.model.Position;
 import robotsim.model.DijkstraPathFinder;
 import java.util.logging.*;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class SimulatorApplication {
 	
 	private static final Logger LOGGER = Logger.getLogger(SimulatorApplication.class.getName());
-	public static final int robotRadius = 8;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		LOGGER.info("Starting the robot simulator...");
 		LOGGER.config("With parameters " + Arrays.toString(args) + ".");
@@ -51,17 +52,21 @@ public class SimulatorApplication {
 		final Door door3 = new Door(new Position(450, 325), 5, 50, "Entrance", factory, room3, null);
 		room3.addDoor(door3);
 		
-		final Robot robot1 = new Robot(new Position(10, 10), robotRadius, "Robot 2", factory, 0, null, new DijkstraPathFinder(factory));
-		final Robot robot2 = new Robot(new Position(40, 10), robotRadius, "Robot 1", factory, 0, null, new DijkstraPathFinder(factory));
+		final Robot robot1 = new Robot(new Position(10, 10), Robot.defaultRobotRadius, "Robot 1", factory, 0, null, new DijkstraPathFinder(factory));
+		final Robot robot2 = new Robot(new Position(40, 10), Robot.defaultRobotRadius, "Robot 2", factory, 0, null, new DijkstraPathFinder(factory));
+		final Robot robot3 = new Robot(new Position(70, 10), Robot.defaultRobotRadius, "Robot 3", factory, 0, null, new DijkstraPathFinder(factory));
 		
-		final VendingMachine Vmachine = new VendingMachine(new Position(20, 350), 80, 100, "Vending Machine", factory);
+		final VendingMachine Vmachine = new VendingMachine(new Position(20, 350), 40, 80, "Vending Machine", factory);
+		final Conveyor conveyor = new Conveyor(new Position(50, 370), 150, 40, "Conveyor", factory, 1, true);
 		
 		factory.addRoom(room1);
 		factory.addRoom(room2);
 		factory.addRoom(room3);
 		factory.addRobot(robot1);
 		factory.addRobot(robot2);
+		factory.addRobot(robot3);
 		factory.addVendingMacchine(Vmachine);
+		factory.addConveyor(conveyor);
 	
 		final SimulatorController controller = new SimulatorController(factory);
 		

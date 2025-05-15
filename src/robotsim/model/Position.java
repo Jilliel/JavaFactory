@@ -28,4 +28,10 @@ public class Position implements Serializable{
 	public void setY(int y) {
 		this.y = y;
 	}
+	
+	public Position add(Position other) {
+		this.setX(this.getX() + other.getX());
+		this.setY(this.getY() + other.getY());
+		return this;
+	}
 }

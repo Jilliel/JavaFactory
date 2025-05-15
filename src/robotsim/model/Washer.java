@@ -79,8 +79,8 @@ public class Washer extends Component implements Serializable{
 	public void behave() {
 		if (this.picked && this.owner != null) {
 			Position topleft = this.owner.getPosition();
-			int xcenter = topleft.getX() + SimulatorApplication.robotRadius - this.radius;
-			int ycenter = topleft.getY() + SimulatorApplication.robotRadius - this.radius;
+			int xcenter = topleft.getX() + Robot.defaultRobotRadius - this.radius;
+			int ycenter = topleft.getY() + Robot.defaultRobotRadius - this.radius;
 			this.setPosition(new Position(xcenter, ycenter));
 		}
 	}

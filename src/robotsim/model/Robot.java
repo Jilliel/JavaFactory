@@ -21,6 +21,7 @@ public class Robot extends Component implements Serializable{
 	private Washer washer;
 	private Position target;
 	private transient FactoryPathFinder pathFinder = null;
+	public static final int defaultRobotRadius = 8;
 	private boolean busy;
 	private boolean delivering;
 	private boolean awaitingpath;
@@ -110,7 +111,7 @@ public class Robot extends Component implements Serializable{
 	}
 	
 	public void behave() {
-		if (this.locked || this.washer == null) {
+		if (this.locked || this.washer == null || !this.busy) {
 			return;
 		} 
 		
