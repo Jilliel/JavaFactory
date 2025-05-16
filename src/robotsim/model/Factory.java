@@ -107,6 +107,10 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		}
 	}
 	
+	public List<Robot> getRobots() {
+		return robots;
+	}
+
 	private boolean checkRoomName(String name) {
 		for (Room room : this.rooms) {
 			if (name == room.getName()) {
@@ -223,7 +227,19 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 		return (Collection<Figure>) elements;
 	}
 	
+	public ChargingStation getFreeChargingStation() {
+		for (Room room : this.rooms) {
+			for (ChargingStation station : room.getStations()) {
+				if (!station.isBusy()) {
+					return station;
+				}
+			}
+		}
+		return null;
+	}
+	
 	private void assignRobots() {
+		/*
 		for (Washer washer : this.getWashers()) {
 			if (washer.isOwned()) {
 				continue;
@@ -232,6 +248,26 @@ public class Factory extends Component implements Canvas, Serializable, Observab
 				if (!robot.isBusy()) {
 					robot.assign(washer);
 					break;
+				}
+			}
+		}*/
+		
+		for (Robot robot : this.robots) {
+			if (!robot.isBusy()) {
+				boolean cannotMove = true;
+				int counter = 0;
+				for (Washer washer : this.getWashers()) {
+					if (!washer.isOwned()) {
+						counter = counter + 1;
+						if ( robot.canGoToWasher(washer)) {
+							cannotMove = false;
+							robot.assign(washer);
+							break;
+						}
+					}
+				}
+				if (cannotMove && counter > 0) {
+					robot.assign(this.getFreeChargingStation());
 				}
 			}
 		}

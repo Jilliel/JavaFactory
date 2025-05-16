@@ -40,6 +40,10 @@ public class Washer extends Component implements Serializable{
 		this.owner = owner;
 	}
 	
+	public Robot getOwner() {
+		return this.owner;
+	}
+	
 	public void releaseOwner() {
 		this.owner = null;
 	}

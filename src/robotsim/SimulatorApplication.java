@@ -47,8 +47,14 @@ public class SimulatorApplication {
 		room2.addDoor(door2);
 		
 		final Room room3 = new Room(new Position(300, 300), 150, 150, "Charging Room", factory);
-		final ChargingStation station = new ChargingStation(new Position(350, 350), 50,50, "Charging Station", factory, false);
-		room3.addStation(station);
+		final ChargingStation station1 = new ChargingStation(new Position(315, 315), 40, 40, "Charging Station 1", factory);
+		final ChargingStation station2 = new ChargingStation(new Position(395, 315), 40, 40, "Charging Station 2", factory);
+		final ChargingStation station3 = new ChargingStation(new Position(315, 395), 40, 40, "Charging Station 3", factory);
+		final ChargingStation station4 = new ChargingStation(new Position(395, 395), 40, 40, "Charging Station 4", factory);
+		room3.addStation(station1);
+		room3.addStation(station2);
+		room3.addStation(station3);
+		room3.addStation(station4);
 		final Door door3 = new Door(new Position(450, 325), 5, 50, "Entrance", factory, room3, null);
 		room3.addDoor(door3);
 		
@@ -57,7 +63,7 @@ public class SimulatorApplication {
 		final Robot robot3 = new Robot(new Position(70, 10), Robot.defaultRobotRadius, "Robot 3", factory, 0, null, new DijkstraPathFinder(factory));
 		
 		final VendingMachine Vmachine = new VendingMachine(new Position(20, 350), 40, 80, "Vending Machine", factory);
-		final Conveyor conveyor = new Conveyor(new Position(50, 370), 150, 40, "Conveyor", factory, 1, true);
+		final Conveyor conveyor = new Conveyor(new Position(50, 370), 150, 40, "Conveyor", factory, -1, true);
 		
 		factory.addRoom(room1);
 		factory.addRoom(room2);

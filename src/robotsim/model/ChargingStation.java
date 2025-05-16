@@ -13,11 +13,19 @@ public class ChargingStation extends Component implements Serializable{
 	private int height;
 	private int width;
 	
-	public ChargingStation(Position position, int width, int height, String name, Factory factory, boolean busy) {
+	public ChargingStation(Position position, int width, int height, String name, Factory factory) {
 		super(position, name, factory);
 		this.width = width;
 		this.height = height;
-		this.busy = busy;
+		this.busy = false;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 
 	public boolean isBusy() {
@@ -38,6 +46,17 @@ public class ChargingStation extends Component implements Serializable{
 	public Style getStyle() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public void behave() {
+		for (Robot robot : this.getFactory().getRobots()) {
+			int x = robot.getxCoordinate();
+			int y = robot.getyCoordinate();
+			if ( (x >= this.getxCoordinate() && x < this.getxCoordinate() + this.getWidth()) 
+					&& (y >= this.getyCoordinate() && y < this.getyCoordinate() + this.getHeight())) {
+				robot.charge();
+			}
+		}
 	}
 
 }

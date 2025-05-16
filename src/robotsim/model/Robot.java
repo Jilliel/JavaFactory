@@ -14,6 +14,7 @@ public class Robot extends Component implements Serializable{
 	
 	private static final long serialVersionUID = 202505090930L;
 	
+	private String defaultName;
 	private double speed;
 	private Room room;
 	private int radius;
@@ -26,11 +27,15 @@ public class Robot extends Component implements Serializable{
 	private boolean delivering;
 	private boolean awaitingpath;
 	private boolean locked;
-	
-	private static final ComponentStyle style = new ComponentStyle(new ComponentColor(0, 255, 0), null);
+	public static final int maxNumberOfSteps = 1000;
+	private int stepsLeft = Robot.maxNumberOfSteps;
+	public static final int backupBattery = 300;
+	private int backupLeft = Robot.backupBattery;
+	private boolean charging = false;
 	
 	public Robot(Position position, int radius, String name, Factory factory, double speed, Room room, FactoryPathFinder pathFinder) {
 		super(position, name, factory);
+		this.defaultName = name;
 		this.speed = speed;
 		this.radius = radius;
 		this.room = room;
@@ -43,7 +48,11 @@ public class Robot extends Component implements Serializable{
 		this.awaitingpath = false;
 		this.path = new ArrayList<Position>();
 	}
-	
+
+	public void setCharging(boolean charging) {
+		this.charging = charging;
+	}
+
 	public boolean isBusy() {
 		return this.busy;
 	}
@@ -71,7 +80,10 @@ public class Robot extends Component implements Serializable{
 	
 	@Override
 	public Style getStyle() {
-		return Robot.style;
+		int number1 = (255 * this.stepsLeft) / Robot.maxNumberOfSteps;
+		int number2 = (255 * this.backupLeft) / Robot.backupBattery;
+		ComponentStyle style = new ComponentStyle(new ComponentColor(number2 - number1 , number1, 0), null);
+		return style;
 	}
 	
 	public void assign(Washer washer) {
@@ -80,6 +92,13 @@ public class Robot extends Component implements Serializable{
 		this.target = washer.getPosition();
 		this.awaitingpath = true;
 		this.washer.setOwner(this);
+	}
+	
+	public void assign(ChargingStation station) {
+		this.busy = true;
+		this.target = (new Position((station.getWidth()/2) - Robot.defaultRobotRadius, (station.getHeight()/2)- Robot.defaultRobotRadius)).add(station.getPosition());
+		this.awaitingpath = true;
+		this.delivering = true;
 	}
 		
 	private void findPath() {
@@ -106,12 +125,20 @@ public class Robot extends Component implements Serializable{
 				this.locked = true;
 			} else {
 				this.setPosition(next);
+				if (this.stepsLeft > 0) {
+					this.stepsLeft = this.stepsLeft - 1;
+					this.setName(defaultName + " - " +(100 * (this.stepsLeft + this.backupLeft)/(Robot.maxNumberOfSteps + Robot.backupBattery)) + "%");
+				}
+				else {
+					this.backupLeft = this.backupLeft - 1;
+					this.setName(defaultName + " - CRITICAL" );
+				}
 			}
 		}
 	}
 	
 	public void behave() {
-		if (this.locked || this.washer == null || !this.busy) {
+		if (this.backupLeft == 0 || this.locked || this.washer == null || !this.busy || this.charging) {
 			return;
 		} 
 		
@@ -138,7 +165,28 @@ public class Robot extends Component implements Serializable{
 
 	@Override
 	public Shape getShape() {
-		// TODO Auto-generated method stub
 		return new Oval(radius, radius);
+	}
+
+	public boolean canGoToWasher(Washer washer) {
+		List<Position> newpath = this.pathFinder.findPath(this.getPosition(), washer.getPosition());
+		return newpath.size() <= this.stepsLeft;
+	}
+	
+	public void charge() {
+		if (this.path.size() == 0) {
+			this.charging = true;
+			if (this.backupLeft < Robot.backupBattery) {
+				this.backupLeft = this.backupLeft + 1;
+				this.setName(defaultName + " - CRITICAL" );
+			}
+			else if (this.stepsLeft < Robot.maxNumberOfSteps) {
+				this.stepsLeft = this.stepsLeft + 1;
+				this.setName(defaultName + " - " +(100 * (this.stepsLeft + this.backupLeft)/(Robot.maxNumberOfSteps + Robot.backupBattery)) + "%" );
+			}
+			else {
+				this.charging = false;
+			}
+		}
 	}
 }
