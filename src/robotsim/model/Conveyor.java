@@ -33,10 +33,10 @@ public class Conveyor extends Component implements Serializable{
 		this.delta = delta;
 		this.horizontal = horizontal;
 		if (horizontal) {
-			this.deltaPos = new Position(-delta, 0);
+			this.deltaPos = new Position(delta, 0);
 		}
 		else {
-			this.deltaPos = new Position(0, -delta);
+			this.deltaPos = new Position(0, delta);
 		}
 	}
 
@@ -72,7 +72,7 @@ public class Conveyor extends Component implements Serializable{
 		Position point;
 		if (this.deliveryPoint == null) {
 			if (this.isHorizontal()) {
-				if (this.delta>0) {
+				if (this.delta<0) {
 					point = new Position(this.getxCoordinate()+this.getWidth(),
 							this.getyCoordinate()+(this.getHeight()/2));
 				}
@@ -82,7 +82,7 @@ public class Conveyor extends Component implements Serializable{
 				}
 			}
 			else {
-				if (this.delta>0) {	
+				if (this.delta<0) {	
 					point = new Position(this.getxCoordinate()+(this.getWidth()/2),
 							this.getyCoordinate()+this.getHeight());
 				}
