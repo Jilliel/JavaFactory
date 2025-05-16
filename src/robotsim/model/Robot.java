@@ -183,7 +183,7 @@ public class Robot extends Component implements Serializable{
 			this.charging = true;
 			if (this.backupLeft < Robot.backupBattery) {
 				this.backupLeft = this.backupLeft + 1;
-				this.setName(defaultName + " - CRITICAL" );
+				this.setName(defaultName + " - " +(100 * (this.stepsLeft + this.backupLeft)/(Robot.maxNumberOfSteps + Robot.backupBattery)) + "%" );
 			}
 			else if (this.stepsLeft < Robot.maxNumberOfSteps) {
 				this.stepsLeft = this.stepsLeft + 1;
