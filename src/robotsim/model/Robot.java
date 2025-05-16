@@ -27,9 +27,9 @@ public class Robot extends Component implements Serializable{
 	private boolean delivering;
 	private boolean awaitingpath;
 	private boolean locked;
-	public static final int maxNumberOfSteps = 1000;
+	public static final int maxNumberOfSteps = 1100;
 	private int stepsLeft = Robot.maxNumberOfSteps;
-	public static final int backupBattery = 300;
+	public static final int backupBattery = 400;
 	private int backupLeft = Robot.backupBattery;
 	private boolean charging = false;
 	
@@ -138,7 +138,11 @@ public class Robot extends Component implements Serializable{
 	}
 	
 	public void behave() {
-		if (this.backupLeft == 0 || this.locked || this.washer == null || !this.busy || this.charging) {
+		if (this.backupLeft == 0) {
+			this.setName(defaultName + " - DEAD" );
+			return;
+		}
+		if (this.locked || this.washer == null || !this.busy || this.charging) {
 			return;
 		} 
 		
