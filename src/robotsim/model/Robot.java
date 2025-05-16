@@ -26,7 +26,6 @@ public class Robot extends Component implements Serializable{
 	private boolean busy;
 	private boolean delivering;
 	private boolean awaitingpath;
-	private boolean locked;
 	public static final int maxNumberOfSteps = 1100;
 	private int stepsLeft = Robot.maxNumberOfSteps;
 	public static final int backupBattery = 400;
@@ -44,7 +43,6 @@ public class Robot extends Component implements Serializable{
 		this.washer = null;
 		this.delivering = false;
 		this.pathFinder = pathFinder;
-		this.locked = false;
 		this.awaitingpath = false;
 		this.path = new ArrayList<Position>();
 	}
@@ -118,13 +116,16 @@ public class Robot extends Component implements Serializable{
 		return this.path.remove(0);	
 	}
 	
+	private boolean checkOhersOnPath() {
+		return this.getFactory().collide(this, this.path.get(0));
+	}
+	
 	private void move() {
 		if (this.path.size() > 0) {
-			Position next = this.getNextOnPath();
-			if (this.getFactory().collide(this, next)) {
-				this.locked = true;
+			if (this.checkOhersOnPath()) {
+				return;
 			} else {
-				this.setPosition(next);
+				this.setPosition(this.getNextOnPath());
 				if (this.stepsLeft > 0) {
 					this.stepsLeft = this.stepsLeft - 1;
 					this.setName(defaultName + " - " +(100 * (this.stepsLeft + this.backupLeft)/(Robot.maxNumberOfSteps + Robot.backupBattery)) + "%");
@@ -142,7 +143,7 @@ public class Robot extends Component implements Serializable{
 			this.setName(defaultName + " - DEAD" );
 			return;
 		}
-		if (this.locked || this.washer == null || !this.busy || this.charging) {
+		if (this.washer == null || !this.busy || this.charging) {
 			return;
 		} 
 		
