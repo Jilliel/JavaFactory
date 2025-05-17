@@ -49,14 +49,17 @@ public class ChargingStation extends Component implements Serializable{
 	}
 	
 	public void behave() {
+		boolean busy = false;
 		for (Robot robot : this.getFactory().getRobots()) {
 			int x = robot.getxCoordinate();
 			int y = robot.getyCoordinate();
 			if ( (x >= this.getxCoordinate() && x < this.getxCoordinate() + this.getWidth()) 
 					&& (y >= this.getyCoordinate() && y < this.getyCoordinate() + this.getHeight())) {
 				robot.charge();
+				busy = true;
 			}
 		}
+		this.busy = busy;
 	}
 
 }
